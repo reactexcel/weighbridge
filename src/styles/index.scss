@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: #6b6666;
+  margin: 0;
+  padding-top: 30px;
+  height: 100vh;
+  .login-form {
+    max-width: 300px;
+    .login-form-button {
+      width: 100%;
+    }
+    .form-footer {
+      text-align: center;
+    }
+    .links {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+.ant-form {
+  margin: 0 auto !important;
+  background-color: #fff;
+  padding: 20px !important;
+  border-radius: 5px;
+}
