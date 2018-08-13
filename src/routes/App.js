@@ -1,8 +1,16 @@
 import React, { Component } from "react";
+import Sidemenu from "../components/sidemenu";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
   render() {
-    return <div>WeighBridge</div>;
+    return (
+      <Router>
+        <Sidemenu>
+          <Route path="/"/>
+          </Sidemenu>
+      </Router>
+    );
   }
 }
 
