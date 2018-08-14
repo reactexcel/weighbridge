@@ -1,3 +1,15 @@
+.ant-layout-sider-zero-width-trigger {
+  top: -52px !important;
+  left: 0px !important; }
+
+.dashboard {
+  width: 95%;
+  background-color: #d7dbdd;
+  border-radius: 5px;
+  overflow: auto;
+  margin: auto;
+  padding: 10px 20px; }
+
 .container {
   background-color: #6b6666;
   margin: 0;
