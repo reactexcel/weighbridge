@@ -2,3 +2,18 @@
   top: -52px !important;
   left: 0px !important;
 }
+.header {
+  position: relative;
+  h1 {
+    color: #fff;
+    font-weight: 500;
+  }
+  .drop-btn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    @media screen and (max-width: 425px) {
+      right: -40px;
+    }
+  }
+}

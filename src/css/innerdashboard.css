@@ -3,5 +3,8 @@
   background-color: #d7dbdd;
   border-radius: 5px;
   overflow: auto;
-  margin: auto;
-  padding: 10px 20px; }
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #001529;
+  font-size: 20px;
+  font-weight: 500; }

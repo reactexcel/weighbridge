@@ -2,16 +2,32 @@
   top: -52px !important;
   left: 0px !important; }
 
+.header {
+  position: relative; }
+  .header h1 {
+    color: #fff;
+    font-weight: 500; }
+  .header .drop-btn {
+    position: absolute;
+    top: 0;
+    right: 5px; }
+    @media screen and (max-width: 425px) {
+      .header .drop-btn {
+        right: -40px; } }
+
 .dashboard {
   width: 95%;
   background-color: #d7dbdd;
   border-radius: 5px;
   overflow: auto;
-  margin: auto;
-  padding: 10px 20px; }
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #001529;
+  font-size: 20px;
+  font-weight: 500; }
 
 .container {
-  background-color: #6b6666;
+  background-color: #001529;
   margin: 0;
   padding-top: 30px;
   height: 100vh; }
@@ -29,6 +45,19 @@
   background-color: #fff;
   padding: 20px !important;
   border-radius: 5px; }
+
+.ant-layout-content {
+  background: #fff; }
+  .ant-layout-content .weight-entry {
+    background: #fff; }
+    .ant-layout-content .weight-entry .weight-entry-form {
+      padding: 10px 20px !important; }
+    .ant-layout-content .weight-entry .lebel-text {
+      font-weight: bold; }
+    .ant-layout-content .weight-entry .ant-row {
+      margin-bottom: 8px; }
+    .ant-layout-content .weight-entry .load-input {
+      margin-right: 3px; }
 
 * {
   margin: 0;

@@ -1,3 +1,16 @@
 .ant-layout-sider-zero-width-trigger {
   top: -52px !important;
   left: 0px !important; }
+
+.header {
+  position: relative; }
+  .header h1 {
+    color: #fff;
+    font-weight: 500; }
+  .header .drop-btn {
+    position: absolute;
+    top: 0;
+    right: 5px; }
+    @media screen and (max-width: 425px) {
+      .header .drop-btn {
+        right: -40px; } }
