@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
+import WeightEntry from "../components/weightEntry";
 
 class App extends Component {
   render() {
@@ -21,6 +22,11 @@ class App extends Component {
                   exact
                   path="/dashboard/searchnedit"
                   component={Searchnedit}
+                />
+                <Route
+                  exact
+                  path="/dashboard/weightentry"
+                  component={WeightEntry}
                 />
               </Dashboard>
             )}

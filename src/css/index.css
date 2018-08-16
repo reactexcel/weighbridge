@@ -1,7 +1,19 @@
-@import url(./searchnedit.css);
 .ant-layout-sider-zero-width-trigger {
   top: -52px !important;
   left: 0px !important; }
+
+.header {
+  position: relative; }
+  .header h1 {
+    color: #fff;
+    font-weight: 500; }
+  .header .drop-btn {
+    position: absolute;
+    top: 0;
+    right: 5px; }
+    @media screen and (max-width: 425px) {
+      .header .drop-btn {
+        right: -40px; } }
 
 .dashboard {
   width: 95%;
@@ -56,7 +68,7 @@
   padding: 10px 0; }
 
 .container {
-  background-color: #6b6666;
+  background-color: #001529;
   margin: 0;
   padding-top: 30px;
   height: 100vh; }
@@ -74,6 +86,54 @@
   background-color: #fff;
   padding: 20px !important;
   border-radius: 5px; }
+
+.dashboard {
+  width: 95%;
+  background-color: #d7dbdd;
+  border-radius: 5px;
+  overflow: auto;
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #001529;
+  font-size: 20px;
+  font-weight: 500; }
+
+.content {
+  padding: 10px 30px !important; }
+
+/* .ant-table-thead {
+  th {
+    padding: 10px 0 !important;
+    text-align: center;
+    max-width: 30px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+} */
+/* .ant-table-row {
+  td {
+    padding: 10px 0 !important;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: fit-content;
+  }
+} */
+.ant-layout-content {
+  background: #fff; }
+  .ant-layout-content .weight-entry {
+    background: #fff; }
+    .ant-layout-content .weight-entry .weight-entry-form {
+      padding: 10px 20px !important; }
+    .ant-layout-content .weight-entry .lebel-text {
+      font-weight: bold; }
+    .ant-layout-content .weight-entry .ant-row {
+      margin-bottom: 8px; }
+    .ant-layout-content .weight-entry .load-input {
+      margin-right: 3px; }
 
 * {
   margin: 0;

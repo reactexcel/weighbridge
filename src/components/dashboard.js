@@ -1,16 +1,47 @@
 import React from "react";
-import { Menu, Icon, Layout } from "antd";
+import { Menu, Icon, Layout, Dropdown, Button } from "antd";
 import { Link } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 class Dashboard extends React.Component {
+  menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <a href="#">Lori No WW112</a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a href="#">Lori No WW113</a>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <a href="#">Lori No WW114</a>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <a href="#">Lori No WW116</a>
+      </Menu.Item>
+      <Menu.Item key="5">
+        <a href="#">Lori No WW2239</a>
+      </Menu.Item>
+      <Menu.Item key="6">
+        <a href="#">Lori No VG987</a>
+      </Menu.Item>
+    </Menu>
+  );
   render() {
     return (
       <div>
         <Layout>
           <Header>
-            <div className="logo" />
+            <div className="header">
+              <h1>WeighBridge</h1>
+              <div className="drop-btn">
+                <Dropdown overlay={this.menu} trigger={["click"]}>
+                  <Button>
+                    <Icon type="down" />
+                  </Button>
+                </Dropdown>
+              </div>
+            </div>
           </Header>
           <Layout>
             <Sider breakpoint="sm" collapsedWidth="0">
@@ -21,19 +52,19 @@ class Dashboard extends React.Component {
                 theme="dark"
               >
                 <Menu.Item key="1">
-                  <Link to="/">
+                  <Link to="/dashboard">
                     <Icon type="dashboard" />
                     Dashboard
                   </Link>
                 </Menu.Item>
                 <Menu.Item key="2">
-                  <Link to="/weighentry">
+                  <Link to="/dashboard/weightentry">
                     <Icon type="area-chart" />
                     Weigh Entry
                   </Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Link to="/searchandedit">
+                  <Link to="/dashboard/searchnedit">
                     <Icon type="table" />
                     Search &amp; Edit
                   </Link>
