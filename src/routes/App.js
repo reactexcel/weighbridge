@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
+import WeightEntry from "../components/weightEntry";
 
 class App extends Component {
   render() {
@@ -15,7 +16,8 @@ class App extends Component {
             path="/dashboard"
             render={() => (
               <Dashboard>
-                <Route path="/dashboard/" component={InnerDashboard} />
+                <Route exact path="/dashboard" component={InnerDashboard} />
+                <Route exact path="/dashboard/weightentry" component={WeightEntry} />
               </Dashboard>
             )}
           />

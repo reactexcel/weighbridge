@@ -6,6 +6,7 @@ const FormItem = Form.Item;
 export default class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
+    this.props.history.push("/dashboard");
   };
 
   render() {
