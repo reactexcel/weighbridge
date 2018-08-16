@@ -34,17 +34,13 @@ class SearchnEdit extends React.Component {
         title: "Ticket No.",
         dataIndex: "tno",
         key: "tno",
-        // width: 100,
         width: "10%"
-        //fixed: "left"
       },
       {
         title: "Lorry No.",
         dataIndex: "lno",
         key: "lno",
-        //width: 100,
         width: "10%"
-        // fixed: "left"
       },
       {
         title: "Supplier Origin",
