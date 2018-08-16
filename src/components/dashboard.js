@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
               <Menu
                 style={{ width: 200, minHeight: "100vh" }}
                 defaultOpenKeys={["sub1"]}
-                mode="vertical"
+                mode="inline"
                 theme="dark"
               >
                 <Menu.Item key="1">

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Dashboard from "../components/dashboard";
 import InnerDashboard from "../components/innerDashboard";
+import Searchnedit from "../components/searchnedit";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../components/login";
 import Signup from "../components/signup";
@@ -15,7 +16,12 @@ class App extends Component {
             path="/dashboard"
             render={() => (
               <Dashboard>
-                <Route path="/dashboard/" component={InnerDashboard} />
+                <Route exact path="/dashboard" component={InnerDashboard} />
+                <Route
+                  exact
+                  path="/dashboard/searchnedit"
+                  component={Searchnedit}
+                />
               </Dashboard>
             )}
           />
