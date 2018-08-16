@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
               <Menu
                 style={{ width: 200, minHeight: "100vh" }}
                 defaultOpenKeys={["sub1"]}
-                mode="vertical"
+                mode="inline"
                 theme="dark"
               >
                 <Menu.Item key="1">
@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
                   </Link>
                 </Menu.Item>
                 <Menu.Item key="3">
-                  <Link to="/searchandedit">
+                  <Link to="/dashboard/searchnedit">
                     <Icon type="table" />
                     Search &amp; Edit
                   </Link>

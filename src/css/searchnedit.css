@@ -1,0 +1,13 @@
+.dashboard {
+  width: 95%;
+  background-color: #d7dbdd;
+  border-radius: 5px;
+  overflow: auto;
+  margin: 20px auto;
+  padding: 10px 20px;
+  color: #001529;
+  font-size: 20px;
+  font-weight: 500; }
+
+.content {
+  padding: 10px 30px !important; }
