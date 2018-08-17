@@ -51,6 +51,10 @@ class Dashboard extends React.Component {
                 mode="inline"
                 theme="dark"
               >
+                <Menu.Item>
+                  <Icon type="user" />
+                  User/Admin
+                </Menu.Item>
                 <Menu.Item key="1">
                   <Link to="/dashboard">
                     <Icon type="dashboard" />
@@ -104,9 +108,14 @@ class Dashboard extends React.Component {
                 </SubMenu>
                 <Menu.Item key="12">
                   <Link to="/dashboard/payments">
-                    {" "}
                     <Icon type="wallet" />
                     Payments
+                  </Link>
+                </Menu.Item>
+                <Menu.Item key="13">
+                  <Link to="/">
+                    <Icon type="poweroff" />
+                    Logout
                   </Link>
                 </Menu.Item>
               </Menu>
