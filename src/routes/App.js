@@ -10,6 +10,7 @@ import WeightEntry from "../components/weightEntry";
 import AddDriverOrAssistant from "../components/addDriverOrAssistant";
 import AddLorry from "../components/addLorry";
 import AddSupplier from "../components/addSupplier";
+import Payment from "../components/payments";
 
 class App extends Component {
   render() {
@@ -42,6 +43,7 @@ class App extends Component {
                   path="/dashboard/addsupplier"
                   component={AddSupplier}
                 />
+                <Route exact path="/dashboard/payments" component={Payment} />
               </Dashboard>
             )}
           />

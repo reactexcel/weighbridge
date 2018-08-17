@@ -101,6 +101,17 @@
 .content {
   padding: 10px 30px !important; }
 
+.ant-layout-content {
+  background: #fff; }
+  .ant-layout-content .input-entry-form {
+    padding: 10px 20px !important; }
+  .ant-layout-content .label-text {
+    font-weight: bold; }
+  .ant-layout-content .ant-row {
+    margin-bottom: 8px; }
+  .ant-layout-content .load-input {
+    margin-right: 3px; }
+
 * {
   margin: 0;
   padding: 0; }

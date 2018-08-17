@@ -102,20 +102,13 @@ class Dashboard extends React.Component {
                     <Link to="/dashboard/addsupplier">Add Supplier</Link>
                   </Menu.Item>
                 </SubMenu>
-                <SubMenu
-                  key="sub5"
-                  title={
-                    <span>
-                      <Icon type="barcode" />
-                      <span>Payment</span>
-                    </span>
-                  }
-                >
-                  <Menu.Item key="9">Option 9</Menu.Item>
-                  <Menu.Item key="10">Option 10</Menu.Item>
-                  <Menu.Item key="11">Option 11</Menu.Item>
-                  <Menu.Item key="12">Option 12</Menu.Item>
-                </SubMenu>
+                <Menu.Item key="12">
+                  <Link to="/dashboard/payments">
+                    {" "}
+                    <Icon type="wallet" />
+                    Payments
+                  </Link>
+                </Menu.Item>
               </Menu>
             </Sider>
             <Content>{this.props.children}</Content>
