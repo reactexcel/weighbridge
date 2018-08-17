@@ -7,7 +7,7 @@ export default class WeightEntry extends Component {
   };
   render() {
     return (
-      <div className="weight-entry">
+      <div>
         <div className="dashboard">Weight Entry</div>
         <div className="input-entry-form">
           <Form onSubmit={e => this.handleSubmit(e)} layout="inline">

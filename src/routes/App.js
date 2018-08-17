@@ -10,6 +10,9 @@ import WeightEntry from "../components/weightEntry";
 import AddUser from "../components/adduser";
 import DeleteUser from "../components/deleteuser";
 import ModifyUserInfo from "../components/modifyuserinfo";
+import AddDriverOrAssistant from "../components/addDriverOrAssistant";
+import AddLorry from "../components/addLorry";
+import AddSupplier from "../components/addSupplier";
 
 class App extends Component {
   render() {
@@ -41,6 +44,17 @@ class App extends Component {
                   exact
                   path="/dashboard/modifyuserinfo"
                   component={ModifyUserInfo}
+                />
+                <Route
+                  exact
+                  path="/dashboard/adddriverorassistant"
+                  component={AddDriverOrAssistant}
+                />
+                <Route exact path="/dashboard/addlorry" component={AddLorry} />
+                <Route
+                  exact
+                  path="/dashboard/addsupplier"
+                  component={AddSupplier}
                 />
               </Dashboard>
             )}
