@@ -112,7 +112,27 @@ class Dashboard extends React.Component {
                     Payments
                   </Link>
                 </Menu.Item>
-                <Menu.Item key="13">
+                <SubMenu
+                  key="sub6"
+                  title={
+                    <span>
+                      <Icon type="database" />
+                      <span>User Management</span>
+                    </span>
+                  }
+                >
+                  <Menu.Item key="13">
+                    <Link to="/dashboard/adduser">Add User</Link>
+                  </Menu.Item>
+                  <Menu.Item key="14">
+                    <Link to="/dashboard/deleteuser">Delete User</Link>
+                  </Menu.Item>
+                  <Menu.Item key="15">
+                    {" "}
+                    <Link to="/dashboard/modifyuserinfo">Modify User Info</Link>
+                  </Menu.Item>
+                </SubMenu>
+                <Menu.Item key="16">
                   <Link to="/">
                     <Icon type="poweroff" />
                     Logout
