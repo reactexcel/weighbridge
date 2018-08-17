@@ -7,6 +7,9 @@ import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
 import WeightEntry from "../components/weightEntry";
+import AddUser from "../components/adduser";
+import DeleteUser from "../components/deleteuser";
+import ModifyUserInfo from "../components/modifyuserinfo";
 
 class App extends Component {
   render() {
@@ -27,6 +30,17 @@ class App extends Component {
                   exact
                   path="/dashboard/weightentry"
                   component={WeightEntry}
+                />
+                <Route exact path="/dashboard/adduser" component={AddUser} />
+                <Route
+                  exact
+                  path="/dashboard/deleteuser"
+                  component={DeleteUser}
+                />
+                <Route
+                  exact
+                  path="/dashboard/modifyuserinfo"
+                  component={ModifyUserInfo}
                 />
               </Dashboard>
             )}
