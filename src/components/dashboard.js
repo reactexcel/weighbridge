@@ -90,9 +90,17 @@ class Dashboard extends React.Component {
                     </span>
                   }
                 >
-                  <Menu.Item key="9">Add Driver/Assistant</Menu.Item>
-                  <Menu.Item key="10">Add Lorry</Menu.Item>
-                  <Menu.Item key="11">Add Supplier</Menu.Item>
+                  <Menu.Item key="9">
+                    <Link to="/dashboard/adddriverorassistant">
+                      Add Driver/Assistant
+                    </Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <Link to="/dashboard/addlorry">Add Lorry</Link>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    <Link to="/dashboard/addsupplier">Add Supplier</Link>
+                  </Menu.Item>
                 </SubMenu>
                 <SubMenu
                   key="sub5"
