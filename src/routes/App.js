@@ -7,6 +7,9 @@ import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
 import WeightEntry from "../components/weightEntry";
+import AddDriverOrAssistant from "../components/addDriverOrAssistant";
+import AddLorry from "../components/addLorry";
+import AddSupplier from "../components/addSupplier";
 
 class App extends Component {
   render() {
@@ -27,6 +30,17 @@ class App extends Component {
                   exact
                   path="/dashboard/weightentry"
                   component={WeightEntry}
+                />
+                <Route
+                  exact
+                  path="/dashboard/adddriverorassistant"
+                  component={AddDriverOrAssistant}
+                />
+                <Route exact path="/dashboard/addlorry" component={AddLorry} />
+                <Route
+                  exact
+                  path="/dashboard/addsupplier"
+                  component={AddSupplier}
                 />
               </Dashboard>
             )}
