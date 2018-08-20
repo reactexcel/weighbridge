@@ -51,6 +51,10 @@ class Dashboard extends React.Component {
                 mode="inline"
                 theme="dark"
               >
+                <Menu.Item>
+                  <Icon type="user" />
+                  User/Admin
+                </Menu.Item>
                 <Menu.Item key="1">
                   <Link to="/dashboard">
                     <Icon type="dashboard" />
@@ -102,20 +106,12 @@ class Dashboard extends React.Component {
                     <Link to="/dashboard/addsupplier">Add Supplier</Link>
                   </Menu.Item>
                 </SubMenu>
-                <SubMenu
-                  key="sub5"
-                  title={
-                    <span>
-                      <Icon type="barcode" />
-                      <span>Payment</span>
-                    </span>
-                  }
-                >
-                  <Menu.Item key="9">Option 9</Menu.Item>
-                  <Menu.Item key="10">Option 10</Menu.Item>
-                  <Menu.Item key="11">Option 11</Menu.Item>
-                  <Menu.Item key="12">Option 12</Menu.Item>
-                </SubMenu>
+                <Menu.Item key="12">
+                  <Link to="/dashboard/payments">
+                    <Icon type="wallet" />
+                    Payments
+                  </Link>
+                </Menu.Item>
                 <SubMenu
                   key="sub6"
                   title={
@@ -125,17 +121,23 @@ class Dashboard extends React.Component {
                     </span>
                   }
                 >
-                  <Menu.Item key="9">
+                  <Menu.Item key="13">
                     <Link to="/dashboard/adduser">Add User</Link>
                   </Menu.Item>
-                  <Menu.Item key="10">
+                  <Menu.Item key="14">
                     <Link to="/dashboard/deleteuser">Delete User</Link>
                   </Menu.Item>
-                  <Menu.Item key="11">
+                  <Menu.Item key="15">
                     {" "}
                     <Link to="/dashboard/modifyuserinfo">Modify User Info</Link>
                   </Menu.Item>
                 </SubMenu>
+                <Menu.Item key="16">
+                  <Link to="/">
+                    <Icon type="poweroff" />
+                    Logout
+                  </Link>
+                </Menu.Item>
               </Menu>
             </Sider>
             <Content>{this.props.children}</Content>
