@@ -116,6 +116,26 @@ class Dashboard extends React.Component {
                   <Menu.Item key="11">Option 11</Menu.Item>
                   <Menu.Item key="12">Option 12</Menu.Item>
                 </SubMenu>
+                <SubMenu
+                  key="sub6"
+                  title={
+                    <span>
+                      <Icon type="database" />
+                      <span>User Management</span>
+                    </span>
+                  }
+                >
+                  <Menu.Item key="9">
+                    <Link to="/dashboard/adduser">Add User</Link>
+                  </Menu.Item>
+                  <Menu.Item key="10">
+                    <Link to="/dashboard/deleteuser">Delete User</Link>
+                  </Menu.Item>
+                  <Menu.Item key="11">
+                    {" "}
+                    <Link to="/dashboard/modifyuserinfo">Modify User Info</Link>
+                  </Menu.Item>
+                </SubMenu>
               </Menu>
             </Sider>
             <Content>{this.props.children}</Content>

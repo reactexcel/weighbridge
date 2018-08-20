@@ -7,6 +7,9 @@ import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
 import WeightEntry from "../components/weightEntry";
+import AddUser from "../components/adduser";
+import DeleteUser from "../components/deleteuser";
+import ModifyUserInfo from "../components/modifyuserinfo";
 import AddDriverOrAssistant from "../components/addDriverOrAssistant";
 import AddLorry from "../components/addLorry";
 import AddSupplier from "../components/addSupplier";
@@ -30,6 +33,17 @@ class App extends Component {
                   exact
                   path="/dashboard/weightentry"
                   component={WeightEntry}
+                />
+                <Route exact path="/dashboard/adduser" component={AddUser} />
+                <Route
+                  exact
+                  path="/dashboard/deleteuser"
+                  component={DeleteUser}
+                />
+                <Route
+                  exact
+                  path="/dashboard/modifyuserinfo"
+                  component={ModifyUserInfo}
                 />
                 <Route
                   exact
