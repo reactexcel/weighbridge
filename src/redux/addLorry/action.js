@@ -1,4 +1,4 @@
-import { put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
 import { putdata } from "../../services/callDynamo";
 
@@ -32,7 +32,7 @@ function* addLorryRequest(action) {
       yield put(actions.addLorrySuccess(response));
     }
   } catch (error) {
-    yield put(actions.AddLorryError(error));
+    yield put(actions.addLorryError(error));
   }
 }
 
