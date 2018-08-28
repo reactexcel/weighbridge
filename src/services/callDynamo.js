@@ -8,7 +8,6 @@ export async function getdata(params) {
         return data;
       }
     })
-    console.log(a)
     return a;
   }
 
