@@ -19,3 +19,7 @@ export const getLorry = createAction(constants.GET_LORRY);
 export const getLorrySuccess = createAction(constants.GET_LORRY_SUCCESS);
 export const getLorryError = createAction(constants.GET_LORRY_ERROR);
 
+export const getLocalLorry = createAction(constants.GET_LOCAL_LORRY);
+
+export const setLorryInfo = createAction(constants.SET_LORRY_INFO);
+

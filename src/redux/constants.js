@@ -13,7 +13,12 @@ const constants = {
 
   GET_LORRY: "GET_LORRY",
   GET_LORRY_SUCCESS: "GET_LORRY_SUCCESS",
-  GET_LORRY_ERROR: "GET_LORRY_ERROR"
+  GET_LORRY_ERROR: "GET_LORRY_ERROR",
+  GET_LOCAL_LORRY: "GET_LOCAL_LORRY",
+
+  SET_LORRY_INFO: "SET_LORRY_INFO",
+
+  lorryData: "lorryData"
 };
 
 export default constants;

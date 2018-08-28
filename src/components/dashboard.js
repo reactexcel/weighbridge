@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
+
 class Dashboard extends React.Component {
   menu = (
     <Menu>

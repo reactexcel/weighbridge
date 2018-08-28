@@ -1,15 +1,28 @@
 import React, { Component } from "react";
 import { Form, Input, InputNumber, Button, Row, Col, Select } from "antd";
 import { connect } from "react-redux";
-import { weighEntryFormData, weighEntry, getLorry } from "../redux/actions";
+import {
+  weighEntryFormData,
+  weighEntry,
+  getLorry,
+  getLocalLorry,
+  setLorryInfo
+} from "../redux/actions";
+import storageHelper from "../services/offlineService";
+import { asyncRepeat } from "../services/checkConnection";
 
 const Option = Select.Option;
 class WeightEntry extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   componentWillMount() {
-    this.props.getLorryData();
+    const lorryData = storageHelper("lorryData");
+    if (!lorryData) {
+      this.props.getLorryData();
+    } else {
+      this.props.getLocalLorryData(JSON.parse(lorryData));
+    }
     this.ticketnumber = Math.random()
       .toString(36)
       .substr(2, 8);
@@ -17,17 +30,26 @@ class WeightEntry extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
-    this.props.weighentrySubmit(this.props.formdata);
+    if (navigator.onLine) {
+      this.props.weighentrySubmit(this.props.formdata);
+    } else {
+      asyncRepeat();
+      storageHelper("weighEntry", JSON.stringify(this.props.formdata));
+    }
+  };
+  handleSelectChange = e => {
+    const lorryData = JSON.parse(storageHelper("lorryData"));
+    this.props.setLorryData({ lorryData: lorryData, id: e });
   };
   handleChange = e => {
     this.props.formData({ name: e.target.name, value: e.target.value });
   };
   render() {
     let list;
-    if (this.props.data) {
+    if (typeof this.props.data !== "string") {
       list = this.props.data.map((item, index) => {
         return (
-          <Option key={index} value={item["Number Plate"].S}>
+          <Option key={index} value={index}>
             {item["Number Plate"].S}
           </Option>
         );
@@ -56,7 +78,9 @@ class WeightEntry extends Component {
                 <label className="label-text">Lori No</label>
               </Col>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                {this.props.data && <Select>{list}</Select>}
+                {this.props.data && (
+                  <Select onChange={this.handleSelectChange}>{list}</Select>
+                )}
               </Col>
             </Row>
             <Row>
@@ -249,7 +273,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   formData: payload => dispatch(weighEntryFormData(payload)),
   weighentrySubmit: data => dispatch(weighEntry(data)),
-  getLorryData: () => dispatch(getLorry())
+  getLorryData: () => dispatch(getLorry()),
+  getLocalLorryData: data => dispatch(getLocalLorry(data)),
+  setLorryData: data => dispatch(setLorryInfo(data))
 });
 
 export default connect(

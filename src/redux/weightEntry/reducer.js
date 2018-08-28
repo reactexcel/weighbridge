@@ -18,7 +18,7 @@ const initialState = {
     netweight: "",
     deduct: ""
   },
-  data: [],
+  data: "",
   isLoadingWeighEntry: false,
   isSuccessWeighEntry: false,
   isErrorWeighEntry: false,
@@ -41,7 +41,6 @@ const weighEntryRequest = (state, action) =>
   });
 const weighEntrySuccess = (state, action) =>
   update(state, {
-    data: { $set: action.payload },
     isLoadingWeighEntry: { $set: false },
     isSuccessWeighEntry: { $set: true },
     isErrorWeighEntry: { $set: false }
@@ -71,6 +70,31 @@ const getLorryError = (state, action) =>
     isSuccessGetLorry: { $set: false },
     isErrorGetLorry: { $set: true }
   });
+const getLocalLorryData = (state, action) =>
+  update(state, { data: { $set: action.payload } });
+const setLorryInfo = (state, action) =>
+  update(state, {
+    formdata: {
+      lorrynumber: {
+        $set: action.payload.lorryData[action.payload.id]["Number Plate"].S
+      },
+      drivername1: {
+        $set: action.payload.lorryData[action.payload.id]["Driver Name1"].S
+      },
+      assistantname1: {
+        $set: action.payload.lorryData[action.payload.id]["Co-Driver1"].S
+      },
+      drivername2: {
+        $set: action.payload.lorryData[action.payload.id]["Driver Name2"].S
+      },
+      assistantname2: {
+        $set: action.payload.lorryData[action.payload.id]["Co-Driver2"].S
+      },
+      woload: {
+        $set: action.payload.lorryData[action.payload.id]["Weight W/o Load"].N
+      }
+    }
+  });
 export default handleActions(
   {
     [constants.WEIGH_ENTRY]: weighEntryRequest,
@@ -79,7 +103,9 @@ export default handleActions(
     [constants.WEIGH_ENTRY_FORMDATA]: weighEntryFormData,
     [constants.GET_LORRY]: getLorryRequest,
     [constants.GET_LORRY_SUCCESS]: getLorrySuccess,
-    [constants.GET_LORRY_ERROR]: getLorryError
+    [constants.GET_LORRY_ERROR]: getLorryError,
+    [constants.GET_LOCAL_LORRY]: getLocalLorryData,
+    [constants.SET_LORRY_INFO]: setLorryInfo
   },
   initialState
 );
