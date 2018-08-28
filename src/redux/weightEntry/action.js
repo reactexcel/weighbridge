@@ -7,8 +7,9 @@ export function* lorryDataRequest(action) {
     TableName: "Lorry"
   };
   try {
-    const response = yield call(getdata, params);
-    if (response) {
+    const response = yield call(getdata, params)
+    console.log(response.response, '=');
+    if (response.response.data) {
       yield put(actions.getLorrySuccess(response.Items));
     }
   } catch (error) {
