@@ -1,16 +1,15 @@
 import { dynamodb } from "../config";
 
-export function getdata(params) {
-  return new Promise((resolve, reject) =>
-    dynamodb.scan(params, (err, data) => {
+export async function getdata(params) {
+  let a = await dynamodb.scan(params, (err, data) => {
       if (err) {
-        reject(err);
+        return err;
       } else {
-        resolve(data);
+        return data;
       }
     })
-  );
-}
+    return a;
+  }
 
 export function putdata(params) {
   return new Promise((resolve, reject) => {
