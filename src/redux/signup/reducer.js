@@ -15,7 +15,12 @@ let initialState = {
   isSuccess: false,
   message: ""
 };
-
+const userSignUpFormData = (state, action) =>
+  update(state, {
+    formdata: {
+      [action.payload.name]: { $set: action.payload.value }
+    }
+  });
 const userSignUpRequest = (state, action) =>
   update(state, {
     isLoading: { $set: true },
@@ -43,7 +48,8 @@ export default handleActions(
   {
     [constants.SIGNUP]: userSignUpRequest,
     [constants.SIGNUP_SUCCESS]: userSignUpSuccess,
-    [constants.SIGNUP_ERROR]: userSignUpError
+    [constants.SIGNUP_ERROR]: userSignUpError,
+    [constants.SIGNUP_FORMDATA]: userSignUpFormData
   },
   initialState
 );
