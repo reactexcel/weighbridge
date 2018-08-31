@@ -1,6 +1,6 @@
-import { dynamodb } from "../../config";
-import { put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
+import { putData } from "../../services/callDynamo";
 
 function* addDriverOrAssistantRequest(action) {
   let params = {
@@ -9,21 +9,23 @@ function* addDriverOrAssistantRequest(action) {
         S: action.payload.id
       },
       "Name": {
-        S: action.payload.name
+        S: action.payload.data.name
       },
       "Role": {
-        S: action.payload.role
+        S: action.payload.data.role
       }
     },
     TableName: "DriverAndAssistant"
   };
-  dynamodb.putItem(params, function(err, data) {
-    if (err) {
-      yield put(actions.addDriverOrAssistantError())
-    } else {
-      yield put(actions.addDriverOrAssistantSuccess())
+  try{
+    const response = yield call(putData, params);
+    if(response){
+      yield put(actions.addDriverOrAssistantSuccess(response));
     }
-  });
+  } catch(error){
+    yield put(actions.addDriverOrAssistantError());
+  }
+  
 }
 
 export default addDriverOrAssistantRequest;

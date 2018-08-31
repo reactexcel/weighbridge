@@ -5,6 +5,7 @@ import {
   addDriverOrAssistantFormData
 } from "../redux/actions";
 import { connect } from "react-redux";
+import constant from "../redux/constants";
 
 const Option = Select.Option;
 
@@ -15,7 +16,7 @@ class AddDriverOrAssistant extends Component {
       .substr(2, 12);
   };
   handleChange = e => {
-    if (e === "driver" || e === "assistant") {
+    if (e === constant.DRIVER || e === constant.ASSISTANT) {
       this.props.addDriverOrAssistantFormData({ name: "role", value: e });
     } else {
       this.props.addDriverOrAssistantFormData({
@@ -28,8 +29,7 @@ class AddDriverOrAssistant extends Component {
     e.preventDefault();
     this.props.addDriverOrAssistant({
       id: this.idGenerator(),
-      role: this.props.formdata.role,
-      name: this.props.formdata.name
+      data:this.props.formdata
     });
   };
 

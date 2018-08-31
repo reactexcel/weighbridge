@@ -39,19 +39,7 @@ class AddSupplier extends Component {
     e.preventDefault();
     this.props.addSupplier({
       id: this.idGenerator(),
-      name: this.props.formData.name,
-      ic: this.props.formData.ic,
-      dob: this.props.formData.dob,
-      address1: this.props.formData.address1,
-      address2: this.props.formData.address2,
-      poskod: this.props.formData.poskod,
-      phoneno: this.props.formData.phoneno,
-      race: this.props.formData.race,
-      sex: this.props.formData.sex,
-      spousename: this.props.formData.spousename,
-      spousedob: this.props.formData.spousedob,
-      licenseno: this.props.formData.licenseno,
-      licenseexpirydate: this.props.formData.licenseexpirydate
+      data:this.props.formData
     });
   };
 
