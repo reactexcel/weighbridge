@@ -1,12 +1,17 @@
 import storageHelper from "./offlineService";
+import { store } from "../index";
+import { setBatchData } from "../redux/actions";
 
 export function asyncRepeat() {
-  setInterval(() => {
-    if (navigator.onLine) {
-      if (storageHelper("weighEntry")) {
-        //If we come back online and there is data in localstore, it will be handled from here
-      } else {
-      }
-    }
-  }, 4000);
+  const localWeighData = storageHelper("weighEntry");
+  const localAddLorryData = storageHelper("addLorry");
+  if (localWeighData.length !== 0 || localAddLorryData.length !== 0 ) {
+    storageHelper();
+    store.dispatch(
+      setBatchData({
+        weighData: localWeighData,
+        lorryData: localAddLorryData
+      })
+    ); 
+  }
 }

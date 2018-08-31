@@ -1,17 +1,16 @@
 import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
-import { getdata, putdata } from "../../services/callDynamo";
+import { getData, putData } from "../../services/callDynamo";
 import storageHelper from "../../services/offlineService";
-import constants from "../constants";
 
 export function* lorryDataRequest(action) {
   let params = {
     TableName: "Lorry"
   };
   try {
-    const response = yield call(getdata, params);
+    const response = yield call(getData, params);
     if (response) {
-      yield call(storageHelper,constants.lorryData,JSON.stringify(response.Items));
+      yield call(storageHelper,"lorryData",response.Items);
       yield put(actions.getLorrySuccess(response.Items));
     }
   } catch (error) {
@@ -65,7 +64,7 @@ export function* weighEntryRequest(action) {
     TableName: "WeighTable"
   };
   try {
-    const response = yield call(putdata, params);
+    const response = yield call(putData, params);
     if (response) {
       yield put(actions.weighEntrySuccess(response.Items));
     }

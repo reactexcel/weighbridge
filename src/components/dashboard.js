@@ -1,11 +1,20 @@
 import React from "react";
 import { Menu, Icon, Layout, Dropdown, Button } from "antd";
 import { Link } from "react-router-dom";
+import storageHelper from "../services/offlineService";
+import { asyncRepeat } from "../services/checkConnection";
 
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 
 class Dashboard extends React.Component {
+  constructor(){
+    super();
+    window.addEventListener("online", asyncRepeat);
+  }
+  componentWillMount() {
+    storageHelper();
+  }
   menu = (
     <Menu>
       <Menu.Item key="0">

@@ -95,6 +95,21 @@ const setLorryInfo = (state, action) =>
       }
     }
   });
+const weighEntryReset = (state, action) =>{
+  console.log(action);
+  
+  return update(state, {
+    formdata: {
+      ticketnumber: { $set: action.payload.ticketnumber },
+      supplierorigin: { $set: "" },
+      suppliername: { $set: "" },
+      wload: { $set: "" },
+      unripe: { $set: "" },
+      netweight: { $set: "" },
+      deduct: { $set: "" }
+    }
+  });
+}
 export default handleActions(
   {
     [constants.WEIGH_ENTRY]: weighEntryRequest,
@@ -105,7 +120,8 @@ export default handleActions(
     [constants.GET_LORRY_SUCCESS]: getLorrySuccess,
     [constants.GET_LORRY_ERROR]: getLorryError,
     [constants.GET_LOCAL_LORRY]: getLocalLorryData,
-    [constants.SET_LORRY_INFO]: setLorryInfo
+    [constants.SET_LORRY_INFO]: setLorryInfo,
+    [constants.WEIGH_ENTRY_RESET]: weighEntryReset
   },
   initialState
 );

@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import { Form, Input, InputNumber, Button, Row, Col, Select } from "antd";
+import { Form, Input, Button, Row, Col, Select } from "antd";
 import { connect } from "react-redux";
 import {
   weighEntryFormData,
   weighEntry,
   getLorry,
   getLocalLorry,
-  setLorryInfo
+  setLorryInfo,
+  weighEntryReset
 } from "../redux/actions";
 import storageHelper from "../services/offlineService";
-import { asyncRepeat } from "../services/checkConnection";
 
 const Option = Select.Option;
 class WeightEntry extends Component {
@@ -21,24 +21,30 @@ class WeightEntry extends Component {
     if (!lorryData) {
       this.props.getLorryData();
     } else {
-      this.props.getLocalLorryData(JSON.parse(lorryData));
+      this.props.getLocalLorryData(lorryData);
     }
-    this.ticketnumber = Math.random()
-      .toString(36)
-      .substr(2, 8);
-    this.props.formData({ name: "ticketnumber", value: this.ticketnumber });
+    this.props.formData({
+      name: "ticketnumber",
+      value: Math.random()
+        .toString(36)
+        .substr(2, 8)
+    });
   }
   handleSubmit = e => {
     e.preventDefault();
     if (navigator.onLine) {
       this.props.weighentrySubmit(this.props.formdata);
     } else {
-      asyncRepeat();
-      storageHelper("weighEntry", JSON.stringify(this.props.formdata));
+      storageHelper("weighEntry", this.props.formdata);
     }
+    this.props.weighDataReset({
+      ticketnumber: Math.random()
+        .toString(36)
+        .substr(2, 8)
+    });
   };
   handleSelectChange = e => {
-    const lorryData = JSON.parse(storageHelper("lorryData"));
+    const lorryData = storageHelper("lorryData");
     this.props.setLorryData({ lorryData: lorryData, id: e });
   };
   handleChange = e => {
@@ -68,7 +74,7 @@ class WeightEntry extends Component {
                 <Input
                   type="text"
                   name="ticketnumber"
-                  value={this.ticketnumber}
+                  value={this.props.formdata.ticketnumber}
                   disabled
                 />
               </Col>
@@ -91,6 +97,7 @@ class WeightEntry extends Component {
                 <Input
                   type="text"
                   name="supplierorigin"
+                  maxLength={15}
                   value={this.props.formdata.supplierorigin}
                   onChange={this.handleChange}
                   required
@@ -105,6 +112,7 @@ class WeightEntry extends Component {
                 <Input
                   type="text"
                   name="suppliername"
+                  maxLength={40}
                   value={this.props.formdata.suppliername}
                   onChange={this.handleChange}
                   required
@@ -141,6 +149,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname1}
                   onChange={this.handleChange}
+                  required
                 />
               </Col>
             </Row>
@@ -155,6 +164,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername2}
                   onChange={this.handleChange}
+                  required
                 />
               </Col>
               <Col
@@ -173,6 +183,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname2}
                   onChange={this.handleChange}
+                  required
                 />
               </Col>
             </Row>
@@ -189,9 +200,6 @@ class WeightEntry extends Component {
                   required
                 />
               </Col>
-              <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                <Input type="text" required />
-              </Col>
             </Row>
             <Row>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
@@ -205,9 +213,6 @@ class WeightEntry extends Component {
                   onChange={this.handleChange}
                   required
                 />
-              </Col>
-              <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                <Input type="text" required />
               </Col>
             </Row>
             <Row>
@@ -275,7 +280,8 @@ const mapDispatchToProps = dispatch => ({
   weighentrySubmit: data => dispatch(weighEntry(data)),
   getLorryData: () => dispatch(getLorry()),
   getLocalLorryData: data => dispatch(getLocalLorry(data)),
-  setLorryData: data => dispatch(setLorryInfo(data))
+  setLorryData: data => dispatch(setLorryInfo(data)),
+  weighDataReset: data => dispatch(weighEntryReset(data))
 });
 
 export default connect(

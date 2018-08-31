@@ -1,6 +1,6 @@
 import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
-import { putdata } from "../../services/callDynamo";
+import { putData } from "../../services/callDynamo";
 
 function* addLorryRequest(action) {
   let params = {
@@ -27,7 +27,7 @@ function* addLorryRequest(action) {
     TableName: "Lorry"
   };
   try {
-    const response = yield call(putdata, params);
+    const response = yield call(putData, params);
     if (response) {
       yield put(actions.addLorrySuccess(response));
     }

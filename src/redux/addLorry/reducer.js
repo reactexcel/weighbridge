@@ -42,12 +42,24 @@ const addLorryError = (state, action) =>
     isSuccess: { $set: false },
     isError: { $set: true }
   });
+const addLorryReset = (state, action) =>
+  update(state, {
+    formdata: {
+      lorrynumber: { $set: "" },
+      wwload: { $set: "" },
+      drivername1: { $set: "" },
+      drivername2: { $set: "" },
+      codriver1: { $set: "" },
+      codriver2: { $set: "" }
+    }
+  });
 export default handleActions(
   {
     [constants.ADD_LORRY]: addLorryRequest,
     [constants.ADD_LORRY_SUCCESS]: addLorrySuccess,
     [constants.ADD_LORRY_ERROR]: addLorryError,
-    [constants.ADD_LORRY_FORMDATA]: addLorryFormData
+    [constants.ADD_LORRY_FORMDATA]: addLorryFormData,
+    [constants.ADD_LORRY_RESET]: addLorryReset
   },
   initialState
 );
