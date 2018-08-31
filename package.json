@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.8.1",
+    "aws-sdk": "^2.299.0",
     "axios": "^0.18.0",
     "chart.js": "^2.7.2",
     "immutability-helper": "^2.7.1",
