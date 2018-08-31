@@ -11,7 +11,11 @@ import rootSaga from "./redux/sagas";
 
 const SagaMiddleware = createSagaMiddleware();
 
+<<<<<<< HEAD
 export const store = createStore(rootReducer, applyMiddleware(SagaMiddleware));
+=======
+const store = createStore(rootReducer, applyMiddleware(SagaMiddleware));
+>>>>>>> a4537d1d646e87aac4bb8835e4d626a7dfeeb953
 
 SagaMiddleware.run(rootSaga);
 
