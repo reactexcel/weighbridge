@@ -25,6 +25,9 @@ export const weighEntryFormData = createAction(constants.WEIGH_ENTRY_FORMDATA);
 export const weighEntryReset = createAction(constants.WEIGH_ENTRY_RESET);
 export const weighEntryRefresh = createAction(constants.WEIGH_ENTRY_REFRESH);
 
+export const lorryModalOpen = createAction(constants.LORRY_MODAL_OPEN);
+export const lorryModalClose = createAction(constants.LORRY_MODAL_CLOSE);
+
 export const addLorry = createAction(constants.ADD_LORRY);
 export const addLorrySuccess = createAction(constants.ADD_LORRY_SUCCESS);
 export const addLorryError = createAction(constants.ADD_LORRY_ERROR);

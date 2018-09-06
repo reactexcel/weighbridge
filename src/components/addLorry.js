@@ -6,7 +6,8 @@ import {
   addLorryReset,
   deleteLorry,
   deleteLorryInState,
-  addLorryRefresh
+  addLorryRefresh,
+  lorryModalClose
 } from "../redux/actions";
 import { connect } from "react-redux";
 import storageHelper from "../services/offlineService";
@@ -17,8 +18,10 @@ class AddLorry extends Component {
   }
   handleSubmit = e => {
     e.preventDefault();
+    e.stopPropagation();
     if (navigator.onLine) {
       this.props.addLorrySubmit(this.props.formdata);
+      this.props.lorryModalClose();
     } else {
       storageHelper("addLorry", this.props.formdata);
     }
@@ -26,10 +29,10 @@ class AddLorry extends Component {
   };
   handleDelete = record => {
     this.props.deleteLorry(record.lorrynumber);
-    const data = this.props.data.filter(function(item) { 
-      
-      return(item.key != record.key)} );
-    
+    const data = this.props.data.filter(function(item) {
+      return item.key != record.key;
+    });
+
     this.props.deleteInState(data);
   };
   handleChange = e => {
@@ -79,12 +82,12 @@ class AddLorry extends Component {
         )
       }
     ];
-    
+
     const dataSource = this.props.data;
 
     return (
       <div>
-        <div className="dashboard">Add Lorry</div>
+        {!this.props.flag && <div className="dashboard">Add Lorry</div>}
         <div className="input-entry-form">
           <Form onSubmit={this.handleSubmit}>
             <Row>
@@ -182,13 +185,14 @@ class AddLorry extends Component {
               </Col>
             </Row>
           </Form>
-          {this.props.data.length !== 0 && (
-            <Table
-              dataSource={dataSource}
-              columns={columns}
-              pagination={false}
-            />
-          )}
+          {!this.props.flag &&
+            this.props.data.length !== 0 && (
+              <Table
+                dataSource={dataSource}
+                columns={columns}
+                pagination={false}
+              />
+            )}
         </div>
       </div>
     );
@@ -205,8 +209,9 @@ const mapDispatchToProps = dispatch => ({
   addLorrySubmit: data => dispatch(addLorry(data)),
   lorryDataReset: () => dispatch(addLorryReset()),
   deleteLorry: data => dispatch(deleteLorry(data)),
-  deleteInState: data =>dispatch(deleteLorryInState(data)),
-  refresh: () => dispatch(addLorryRefresh())
+  deleteInState: data => dispatch(deleteLorryInState(data)),
+  refresh: () => dispatch(addLorryRefresh()),
+  lorryModalClose: () => dispatch(lorryModalClose())
 });
 
 export default connect(

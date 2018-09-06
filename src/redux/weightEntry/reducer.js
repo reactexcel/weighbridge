@@ -30,6 +30,7 @@ const initialState = {
   isSuccessGetSupplier: false,
   isErrorGetSupplier: false,
   message: "",
+  lorryModal: false
 };
 const weighEntryFormData = (state, action) =>
   update(state, {
@@ -88,16 +89,22 @@ const setLorryInfo = (state, action) => {
         $set: action.payload.lorryData[action.payload.id]["Driver Name1"].S
       },
       assistantname1: {
-        $set: action.payload.lorryData[action.payload.id]["Co-Driver1"].S
+        $set: action.payload.lorryData[action.payload.id]["Co-Driver1"]
+          ? action.payload.lorryData[action.payload.id]["Co-Driver1"].S
+          : ""
       },
       drivername2: {
-        $set: action.payload.lorryData[action.payload.id]["Driver Name2"].S
+        $set: action.payload.lorryData[action.payload.id]["Driver Name2"]
+          ? action.payload.lorryData[action.payload.id]["Driver Name2"].S
+          : ""
       },
       assistantname2: {
-        $set: action.payload.lorryData[action.payload.id]["Co-Driver2"].S
+        $set: action.payload.lorryData[action.payload.id]["Co-Driver2"]
+          ? action.payload.lorryData[action.payload.id]["Co-Driver2"].S
+          : ""
       },
       woload: {
-        $set: action.payload.lorryData[action.payload.id]["Weight W/o Load"].N
+        $set: action.payload.lorryData[action.payload.id]["Weight W/o Load"].S
       }
     }
   });
@@ -121,9 +128,9 @@ const getSupplierError = (state, action) =>
     isSuccessGetSupplier: { $set: false },
     isErrorGetSupplier: { $set: true }
   });
-const getLocalSupplierData = (state, action) =>{    
+const getLocalSupplierData = (state, action) => {
   return update(state, { supplierdata: { $set: action.payload } });
-}
+};
 const setSupplierInfo = (state, action) =>
   update(state, {
     formdata: {
@@ -148,6 +155,15 @@ const weighEntryRefresh = (state, action) =>
   update(state, {
     message: { $set: "" }
   });
+const lorryModalOpen = (state, action) =>
+  update(state, {
+    lorryModal: { $set: true }
+  });
+const lorryModalClose = (state, action) =>
+  update(state, {
+    lorryModal: { $set: false }
+  });
+
 export default handleActions(
   {
     [constants.WEIGH_ENTRY]: weighEntryRequest,
@@ -165,7 +181,9 @@ export default handleActions(
     [constants.GET_SUPPLIER_SUCCESS]: getSupplierSuccess,
     [constants.GET_SUPPLIER_ERROR]: getSupplierError,
     [constants.GET_LOCAL_SUPPLIER]: getLocalSupplierData,
-    [constants.SET_SUPPLIER_INFO]: setSupplierInfo
+    [constants.SET_SUPPLIER_INFO]: setSupplierInfo,
+    [constants.LORRY_MODAL_OPEN]: lorryModalOpen,
+    [constants.LORRY_MODAL_CLOSE]: lorryModalClose
   },
   initialState
 );

@@ -22,15 +22,15 @@ class ModifyUserInfo extends React.Component {
     };
     this.columns = [
       {
-        title: "User Id",
-        dataIndex: "uid",
-        key: "uid",
-        width: "30%"
-      },
-      {
         title: "User Name",
         dataIndex: "uname",
         key: "uname",
+        width: "30%"
+      },
+      {
+        title: "Email",
+        dataIndex: "uid",
+        key: "uid",
         width: "30%"
       },
       {

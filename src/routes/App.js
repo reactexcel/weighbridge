@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Dashboard from "../components/dashboard";
 import InnerDashboard from "../components/innerDashboard";
 import Searchnedit from "../components/searchnedit";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
@@ -14,11 +14,12 @@ import AddDriverOrAssistant from "../components/addDriverOrAssistant";
 import AddLorry from "../components/addLorry";
 import AddSupplier from "../components/addSupplier";
 import Payment from "../components/payments";
+// import {hashHistory} from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router >
         <Switch>
           <Route
             path="/dashboard"

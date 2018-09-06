@@ -58,10 +58,10 @@ class Dashboard extends React.Component {
                 mode="inline"
                 theme="dark"
               >
-                <Menu.Item>
+                {/* <Menu.Item>
                   <Icon type="user" />
                   User/Admin
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item key="1">
                   <Link to="/dashboard">
                     <Icon type="dashboard" />

@@ -2,12 +2,14 @@ import React from "react";
 import { Table, Icon } from "antd";
 
 const dataSource = [
-  {
+  { 
+    key: 1,
     uid: "abc",
     uname: "xyz",
     type: "Payout User"
   },
   {
+    key: 2,
     uid: "abc",
     uname: "xyz",
     type: "Data Entry User"
@@ -15,15 +17,15 @@ const dataSource = [
 ];
 const columns = [
   {
-    title: "User Id",
-    dataIndex: "uid",
-    key: "uid",
-    width: "30%"
-  },
-  {
     title: "User Name",
     dataIndex: "uname",
     key: "uname",
+    width: "30%"
+  },
+  {
+    title: "Email",
+    dataIndex: "uid",
+    key: "uid",
     width: "30%"
   },
   {

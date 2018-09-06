@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Row, Col, Select } from "antd";
+import { Form, Input, Button, Row, Col, Select, Modal } from "antd";
 import { connect } from "react-redux";
 import {
   weighEntryFormData,
@@ -13,19 +13,38 @@ import {
   getSupplier,
   getLocalSupplier,
   setSupplierInfo,
-  addSupplierResetSuccess
+  addSupplierResetSuccess,
+  lorryModalOpen,
+  lorryModalClose
 } from "../redux/actions";
 import storageHelper from "../services/offlineService";
+import AddLorry from "./addLorry";
 
 const Option = Select.Option;
 class WeightEntry extends Component {
   constructor(props) {
     super(props);
   }
+  showModal = () => {
+    this.props.lorryModalOpen();
+  };
+  handleCancel = e => {
+    this.props.lorryModalClose();
+  };
+  componentWillReceiveProps(nextprops){
+    console.log(this.props);
+    console.log(nextprops.addedLorry);
+    if(nextprops.addedLorry){
+      console.log("===============");
+      this.props.getLorryData();
+      this.props.addLorryResetSuccess();
+    }
+    
+  }
   componentWillMount() {
     const lorryData = storageHelper("lorryData");
     const supplierData = storageHelper("supplierData");
-    
+
     if (!lorryData || this.props.addedLorry) {
       this.props.getLorryData();
       this.props.addLorryResetSuccess();
@@ -35,7 +54,7 @@ class WeightEntry extends Component {
     if (!supplierData || this.props.addedSupplier) {
       this.props.getSupplierData();
       this.props.addSupplierResetSuccess();
-    } else {      
+    } else {
       this.props.getLocalSupplierData(supplierData);
     }
     this.props.formData({
@@ -46,8 +65,9 @@ class WeightEntry extends Component {
     });
     this.props.refresh();
   }
-  handleSubmit = e => {
+  handleWeighSubmit = e => {
     e.preventDefault();
+    e.stopPropagation();
     if (navigator.onLine) {
       this.props.weighentrySubmit(this.props.formdata);
     } else {
@@ -60,11 +80,11 @@ class WeightEntry extends Component {
     });
   };
   handleSelectChange = e => {
-    const lorryData = storageHelper("lorryData");    
+    const lorryData = storageHelper("lorryData");
     this.props.setLorryData({ lorryData: lorryData, id: e });
   };
   handleSelectSupplierChange = e => {
-    const supplierData = storageHelper("supplierData");    
+    const supplierData = storageHelper("supplierData");
     this.props.s({ supplierData: supplierData, id: e });
   };
   handleChange = e => {
@@ -95,7 +115,7 @@ class WeightEntry extends Component {
       <div>
         <div className="dashboard">Weight Entry</div>
         <div className="input-entry-form">
-          <Form onSubmit={e => this.handleSubmit(e)} layout="inline">
+          <Form onSubmit={this.handleWeighSubmit} layout="inline">
             <Row>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                 <label className="label-text">Ticket No</label>
@@ -115,8 +135,29 @@ class WeightEntry extends Component {
               </Col>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                 {this.props.lorrydata && (
-                  <Select onChange={this.handleSelectChange}>{lorrylist}</Select>
+                  <Select onChange={this.handleSelectChange}>
+                    {lorrylist}
+                  </Select>
                 )}
+              </Col>
+              <Col
+                xs={24}
+                sm={24}
+                md={24}
+                lg={{ span: 4, push: 1 }}
+                xl={{ span: 4, push: 1 }}
+              >
+                <Button type="primary" onClick={this.showModal}>
+                  Add Lorry
+                </Button>
+                <Modal
+                  title="Add Lorry"
+                  visible={this.props.lorryModal}
+                  onCancel={this.handleCancel}
+                  footer={null}
+                >
+                  <AddLorry flag={true}/>
+                </Modal>
               </Col>
             </Row>
             <Row>
@@ -125,19 +166,11 @@ class WeightEntry extends Component {
               </Col>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                 {this.props.supplierdata && (
-                  <Select onChange={this.handleSelectSupplierChange}>{supplierlist}</Select>
+                  <Select onChange={this.handleSelectSupplierChange}>
+                    {supplierlist}
+                  </Select>
                 )}
               </Col>
-              {/* <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                <Input
-                  type="text"
-                  name="suppliername"
-                  maxLength={40}
-                  value={this.props.formdata.suppliername}
-                  onChange={this.handleChange}
-                  required
-                />
-              </Col> */}
             </Row>
             <Row>
               <Col sxs={24} sm={24} md={24} lg={4} xl={4}>
@@ -165,7 +198,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername1}
                   onChange={this.handleChange}
-                  disabled
+                  required
                 />
               </Col>
               <Col
@@ -184,7 +217,6 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname1}
                   onChange={this.handleChange}
-                  disabled
                 />
               </Col>
             </Row>
@@ -199,7 +231,6 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername2}
                   onChange={this.handleChange}
-                  disabled
                 />
               </Col>
               <Col
@@ -218,7 +249,6 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname2}
                   onChange={this.handleChange}
-                  disabled
                 />
               </Col>
             </Row>
@@ -246,7 +276,6 @@ class WeightEntry extends Component {
                   name="woload"
                   value={this.props.formdata.woload}
                   onChange={this.handleChange}
-                  disabled
                 />
               </Col>
             </Row>
@@ -308,15 +337,16 @@ class WeightEntry extends Component {
   }
 }
 const mapStateToProps = state => {
-  return ({
-  formdata: state.weighentry.formdata,
-  lorrydata: state.weighentry.lorrydata,
-  supplierdata: state.weighentry.supplierdata,
-  message: state.weighentry.message,
-  addedLorry: state.addlorry.isSuccess,
-  addedSupplier: state.addSupplier.isSuccess
-});
-}
+  return {
+    formdata: state.weighentry.formdata,
+    lorrydata: state.weighentry.lorrydata,
+    supplierdata: state.weighentry.supplierdata,
+    message: state.weighentry.message,
+    addedLorry: state.addlorry.isSuccess,
+    addedSupplier: state.addSupplier.isSuccess,
+    lorryModal: state.weighentry.lorryModal
+  };
+};
 const mapDispatchToProps = dispatch => ({
   formData: payload => dispatch(weighEntryFormData(payload)),
   weighentrySubmit: data => dispatch(weighEntry(data)),
@@ -329,7 +359,9 @@ const mapDispatchToProps = dispatch => ({
   getSupplierData: () => dispatch(getSupplier()),
   getLocalSupplierData: data => dispatch(getLocalSupplier(data)),
   setSupplierData: data => dispatch(setSupplierInfo(data)),
-  addSupplierResetSuccess: data => dispatch(addSupplierResetSuccess())
+  addSupplierResetSuccess: data => dispatch(addSupplierResetSuccess()),
+  lorryModalOpen: () => dispatch(lorryModalOpen()),
+  lorryModalClose: () => dispatch(lorryModalClose())
 });
 
 export default connect(
