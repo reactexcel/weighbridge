@@ -27,8 +27,6 @@ class Signup extends Component {
     this.props.Checked(!e.target.value);
   }
   handleSubmit = e => {
-    console.log(this.props.formdata.checked);
-    
     e.preventDefault();
     if (
       this.props.formdata.password === this.props.formdata.confirmpassword &&

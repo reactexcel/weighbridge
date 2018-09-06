@@ -54,8 +54,6 @@ const loginRedirect = (state, action) =>
   });
 const logoutSuccess = (state, action) =>
   {
-    console.log("++++++++++++++");
-    
     return update(state, {
     isSuccess: {$set: false},
     message: {$set: ""}

@@ -48,8 +48,6 @@ export function* addSupplierRequest(action) {
     },
     TableName: "Supplier"
   };
-  console.log(i);
-  
   const data = {
     key: i++,
     id: action.payload.id,
@@ -60,8 +58,6 @@ export function* addSupplierRequest(action) {
   try{
     const response = yield call(putData, params);
     if(response){
-      console.log(data);
-      
       yield put(actions.addSupplierSuccess(data));
     }
   } catch(error){

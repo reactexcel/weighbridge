@@ -25,7 +25,6 @@ class WeightEntry extends Component {
   componentWillMount() {
     const lorryData = storageHelper("lorryData");
     const supplierData = storageHelper("supplierData");
-    console.log(supplierData);
     
     if (!lorryData || this.props.addedLorry) {
       this.props.getLorryData();
@@ -36,11 +35,7 @@ class WeightEntry extends Component {
     if (!supplierData || this.props.addedSupplier) {
       this.props.getSupplierData();
       this.props.addSupplierResetSuccess();
-      console.log("0");
-      
-    } else {
-      console.log("1");
-      
+    } else {      
       this.props.getLocalSupplierData(supplierData);
     }
     this.props.formData({
@@ -77,13 +72,8 @@ class WeightEntry extends Component {
   };
   render() {
     let lorrylist;
-    console.log( this.props.lorrydata);
-    console.log(this.props.supplierdata);
-    
     if (typeof this.props.lorrydata !== "string") {
       lorrylist = this.props.lorrydata.map((item, index) => {
-        //console.log(item["Number Plate"]);
-        
         return (
           <Option key={index} value={index}>
             {item["Number Plate"].S}
@@ -318,8 +308,6 @@ class WeightEntry extends Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.weighentry.supplierdata);
-  
   return ({
   formdata: state.weighentry.formdata,
   lorrydata: state.weighentry.lorrydata,

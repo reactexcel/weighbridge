@@ -25,14 +25,10 @@ class AddLorry extends Component {
     this.props.lorryDataReset();
   };
   handleDelete = record => {
-    console.log(record);
     this.props.deleteLorry(record.lorrynumber);
-    //const data = this.props.data;
     const data = this.props.data.filter(function(item) { 
-      console.log(item.key, record.key);
       
       return(item.key != record.key)} );
-    console.log(data);
     
     this.props.deleteInState(data);
   };

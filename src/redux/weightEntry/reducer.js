@@ -121,9 +121,7 @@ const getSupplierError = (state, action) =>
     isSuccessGetSupplier: { $set: false },
     isErrorGetSupplier: { $set: true }
   });
-const getLocalSupplierData = (state, action) =>{
-    console.log(action);
-    
+const getLocalSupplierData = (state, action) =>{    
   return update(state, { supplierdata: { $set: action.payload } });
 }
 const setSupplierInfo = (state, action) =>

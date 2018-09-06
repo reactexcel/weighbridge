@@ -64,7 +64,6 @@ const addSupplierResetSuccess = (state, action) =>
   });
 
 const handleAddSupplierReset = (state, action) => {
-  console.log("=========");
   
   return update(state, {
     formData: {

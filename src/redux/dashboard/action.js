@@ -37,7 +37,6 @@ export function* setBatchDataRequest(action){
         }
       )
     });  
-    console.log(action.payload.driverOrAssistantData);
     action.payload.driverOrAssistantData.forEach(item =>{
       
       driverOrAssistantItems.push(
@@ -170,7 +169,6 @@ export function* setBatchDataRequest(action){
     const params = {
       RequestItems: requestItems
     }
-    console.log(params);
     
     try{
       const response = yield call(putBatchData, params);

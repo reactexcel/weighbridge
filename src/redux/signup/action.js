@@ -29,7 +29,6 @@ export default function* signupRequest(action) {
     try {
       const res = yield call(queryDb, param);
         if(res.Count >0){
-            console.log(res);
             yield put(actions.signUpError("Email Already Exists"));
         } else {
             try{
@@ -43,7 +42,6 @@ export default function* signupRequest(action) {
 
         }
   } catch (error) {
-      console.log(error);
       yield put(actions.signUpError());
   }
 }

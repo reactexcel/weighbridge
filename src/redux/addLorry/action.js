@@ -22,8 +22,6 @@ export function* addLorryRequest(action) {
     Item: a,
     TableName: "Lorry"
   };
-  console.log(i);
-  
   let data = {
     key: i++,
     lorrynumber: action.payload.lorrynumber,

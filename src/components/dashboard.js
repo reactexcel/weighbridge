@@ -22,7 +22,6 @@ class Dashboard extends React.Component {
     this.props.logout();
   };
   render() {
-    console.log(this.props);
     
     const menu = (
       <Menu>
@@ -36,9 +35,6 @@ class Dashboard extends React.Component {
           })}
       </Menu>
     );
-
-    console.log(this.props.data);
-
     return (
       <div>
         <Layout>
