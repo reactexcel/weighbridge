@@ -3,41 +3,42 @@ import { Menu, Icon, Layout, Dropdown, Button } from "antd";
 import { Link } from "react-router-dom";
 import storageHelper from "../services/offlineService";
 import { asyncRepeat } from "../services/checkConnection";
+import { connect } from "react-redux";
+import { logoutSuccess, loginRedirect } from "../redux/actions";
+import { withRouter } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 
 class Dashboard extends React.Component {
-  constructor(){
+  constructor() {
     super();
     window.addEventListener("online", asyncRepeat);
   }
   componentWillMount() {
     storageHelper();
   }
-  menu = (
-    <Menu>
-      <Menu.Item key="0">
-        <a href="#">Lori No WW112</a>
-      </Menu.Item>
-      <Menu.Item key="1">
-        <a href="#">Lori No WW113</a>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <a href="#">Lori No WW114</a>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <a href="#">Lori No WW116</a>
-      </Menu.Item>
-      <Menu.Item key="5">
-        <a href="#">Lori No WW2239</a>
-      </Menu.Item>
-      <Menu.Item key="6">
-        <a href="#">Lori No VG987</a>
-      </Menu.Item>
-    </Menu>
-  );
+  handleLogout = () => {
+    this.props.logout();
+  };
   render() {
+    console.log(this.props);
+    
+    const menu = (
+      <Menu>
+        {this.props.data.length &&
+          this.props.data.map((val, index) => {
+            return (
+              <Menu.Item key={index}>
+                <Link to="#">{val.lorrynumber}</Link>
+              </Menu.Item>
+            );
+          })}
+      </Menu>
+    );
+
+    console.log(this.props.data);
+
     return (
       <div>
         <Layout>
@@ -45,7 +46,7 @@ class Dashboard extends React.Component {
             <div className="header">
               <h1>WeighBridge</h1>
               <div className="drop-btn">
-                <Dropdown overlay={this.menu} trigger={["click"]}>
+                <Dropdown overlay={menu} trigger={["click"]}>
                   <Button>
                     <Icon type="down" />
                   </Button>
@@ -143,9 +144,11 @@ class Dashboard extends React.Component {
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="16">
-                  <Link to="/">
+                  <Link to="/" onClick={this.handleLogout}>
+                    {/* <Button onClick={this.handleLogout}> */}
                     <Icon type="poweroff" />
                     Logout
+                    {/* </Button> */}
                   </Link>
                 </Menu.Item>
               </Menu>
@@ -157,5 +160,16 @@ class Dashboard extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  data: state.addlorry.data,
+  loggedIn: state.login.isSuccess
+});
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutSuccess())
+});
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard));

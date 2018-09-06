@@ -6,7 +6,9 @@ import storageHelper from "../../services/offlineService";
 export function* setBatchDataRequest(action){  
     const lorryItems = [];
     const weighItems = [];
-    let params;
+    const supplierItems = [];
+    const driverOrAssistantItems = [];
+   
     action.payload.lorryData.forEach(item =>{
       lorryItems.push(
         {
@@ -35,6 +37,74 @@ export function* setBatchDataRequest(action){
         }
       )
     });  
+    console.log(action.payload.driverOrAssistantData);
+    action.payload.driverOrAssistantData.forEach(item =>{
+      
+      driverOrAssistantItems.push(
+      {
+        PutRequest: {
+          Item: {
+            "Id": {
+              S: item.id
+            },
+            "Name": {
+              S: item.data.name
+            },
+            "Role": {
+              S: item.data.role
+            }
+          }
+        }
+      });
+    })
+    action.payload.supplierData.forEach(item => {
+      supplierItems.push(
+        {
+          PutRequest: {
+            Item: {
+              "Supplier Id": {
+                S: item.id
+              },
+              "Name": {
+                S: item.data.name
+              },
+              "Ic": {
+                S: item.data.ic
+              },
+              "Date Of Birth": {
+                S: item.data.dob
+              },
+              "Address 1": {
+                S: item.data.address1
+              },
+              "Address 2": {
+                S: item.data.address2
+              },
+              "Poskod": {
+                S: item.data.poskod
+              },
+              "Phone No": {
+                N: item.data.phoneno
+              },
+              "Race": {
+                S: item.data.race
+              },
+              "Sex": {
+                S: item.data.sex
+              },
+              "Spouse Date Of Birth": {
+                S: item.data.spousedob
+              },
+              "License": {
+                S: item.data.licenseno
+              },
+              "Expiry Date": {
+                S: item.data.licenseexpirydate
+              }
+            }
+          }
+        })
+    })
     action.payload.weighData.forEach(item => {
       weighItems.push( 
       {
@@ -83,27 +153,25 @@ export function* setBatchDataRequest(action){
         }
       });
     });
-    if(weighItems.length !== 0 && lorryItems.length !== 0){
-      params = {
-        RequestItems: {
-        "WeighTable": weighItems,
-        "Lorry": lorryItems
-        }
-      }
-    } else if(weighItems.length !==0){
-      params = {
-        RequestItems: {
-          "WeighTable": weighItems
-        }
-      }
+    const requestArray = [
+      { "Lorry": lorryItems },
+      { "WeighTable": weighItems },
+      { "Supplier": supplierItems },
+      { "DriverAndAssistant": driverOrAssistantItems }
+    ];
+    let requestItems = {};
+    requestArray.forEach(function(requestArrayItem){
+      let keys = Object.keys(requestArrayItem);
+      keys.forEach(function(key){
+        if(requestArrayItem[key].length !== 0)
+        requestItems[key] = requestArrayItem[key];
+      })
+    });
+    const params = {
+      RequestItems: requestItems
     }
-    else if(lorryItems.length !== 0){
-      params = {
-        RequestItems: {
-        "Lorry": lorryItems
-        }
-      }
-    }    
+    console.log(params);
+    
     try{
       const response = yield call(putBatchData, params);
       yield call(storageHelper);

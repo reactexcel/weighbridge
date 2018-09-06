@@ -7,7 +7,13 @@ import {
   getLorry,
   getLocalLorry,
   setLorryInfo,
-  weighEntryReset
+  weighEntryReset,
+  addLorryResetSuccess,
+  weighEntryRefresh,
+  getSupplier,
+  getLocalSupplier,
+  setSupplierInfo,
+  addSupplierResetSuccess
 } from "../redux/actions";
 import storageHelper from "../services/offlineService";
 
@@ -18,10 +24,24 @@ class WeightEntry extends Component {
   }
   componentWillMount() {
     const lorryData = storageHelper("lorryData");
-    if (!lorryData) {
+    const supplierData = storageHelper("supplierData");
+    console.log(supplierData);
+    
+    if (!lorryData || this.props.addedLorry) {
       this.props.getLorryData();
+      this.props.addLorryResetSuccess();
     } else {
       this.props.getLocalLorryData(lorryData);
+    }
+    if (!supplierData || this.props.addedSupplier) {
+      this.props.getSupplierData();
+      this.props.addSupplierResetSuccess();
+      console.log("0");
+      
+    } else {
+      console.log("1");
+      
+      this.props.getLocalSupplierData(supplierData);
     }
     this.props.formData({
       name: "ticketnumber",
@@ -29,6 +49,7 @@ class WeightEntry extends Component {
         .toString(36)
         .substr(2, 8)
     });
+    this.props.refresh();
   }
   handleSubmit = e => {
     e.preventDefault();
@@ -44,19 +65,38 @@ class WeightEntry extends Component {
     });
   };
   handleSelectChange = e => {
-    const lorryData = storageHelper("lorryData");
+    const lorryData = storageHelper("lorryData");    
     this.props.setLorryData({ lorryData: lorryData, id: e });
+  };
+  handleSelectSupplierChange = e => {
+    const supplierData = storageHelper("supplierData");    
+    this.props.s({ supplierData: supplierData, id: e });
   };
   handleChange = e => {
     this.props.formData({ name: e.target.name, value: e.target.value });
   };
   render() {
-    let list;
-    if (typeof this.props.data !== "string") {
-      list = this.props.data.map((item, index) => {
+    let lorrylist;
+    console.log( this.props.lorrydata);
+    console.log(this.props.supplierdata);
+    
+    if (typeof this.props.lorrydata !== "string") {
+      lorrylist = this.props.lorrydata.map((item, index) => {
+        //console.log(item["Number Plate"]);
+        
         return (
           <Option key={index} value={index}>
             {item["Number Plate"].S}
+          </Option>
+        );
+      });
+    }
+    let supplierlist;
+    if (typeof this.props.supplierdata !== "string") {
+      supplierlist = this.props.supplierdata.map((item, index) => {
+        return (
+          <Option key={index} value={index}>
+            {item["Name"].S}
           </Option>
         );
       });
@@ -84,10 +124,30 @@ class WeightEntry extends Component {
                 <label className="label-text">Lori No</label>
               </Col>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                {this.props.data && (
-                  <Select onChange={this.handleSelectChange}>{list}</Select>
+                {this.props.lorrydata && (
+                  <Select onChange={this.handleSelectChange}>{lorrylist}</Select>
                 )}
               </Col>
+            </Row>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                <label className="label-text">Supplier Name</label>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                {this.props.supplierdata && (
+                  <Select onChange={this.handleSelectSupplierChange}>{supplierlist}</Select>
+                )}
+              </Col>
+              {/* <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                <Input
+                  type="text"
+                  name="suppliername"
+                  maxLength={40}
+                  value={this.props.formdata.suppliername}
+                  onChange={this.handleChange}
+                  required
+                />
+              </Col> */}
             </Row>
             <Row>
               <Col sxs={24} sm={24} md={24} lg={4} xl={4}>
@@ -106,21 +166,6 @@ class WeightEntry extends Component {
             </Row>
             <Row>
               <Col xs={24} sm={24} md={24} lg={4} xl={4}>
-                <label className="label-text">Supplier Name</label>
-              </Col>
-              <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                <Input
-                  type="text"
-                  name="suppliername"
-                  maxLength={40}
-                  value={this.props.formdata.suppliername}
-                  onChange={this.handleChange}
-                  required
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={24} sm={24} md={24} lg={4} xl={4}>
                 <label className="label-text">Driver Name 1</label>
               </Col>
               <Col xs={24} sm={24} md={24} lg={6} xl={6}>
@@ -130,7 +175,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername1}
                   onChange={this.handleChange}
-                  required
+                  disabled
                 />
               </Col>
               <Col
@@ -149,7 +194,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname1}
                   onChange={this.handleChange}
-                  required
+                  disabled
                 />
               </Col>
             </Row>
@@ -164,7 +209,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername2}
                   onChange={this.handleChange}
-                  required
+                  disabled
                 />
               </Col>
               <Col
@@ -183,7 +228,7 @@ class WeightEntry extends Component {
                   maxLength={25}
                   value={this.props.formdata.assistantname2}
                   onChange={this.handleChange}
-                  required
+                  disabled
                 />
               </Col>
             </Row>
@@ -211,7 +256,7 @@ class WeightEntry extends Component {
                   name="woload"
                   value={this.props.formdata.woload}
                   onChange={this.handleChange}
-                  required
+                  disabled
                 />
               </Col>
             </Row>
@@ -263,6 +308,7 @@ class WeightEntry extends Component {
                 <Button htmlType="submit" type="primary">
                   Submit &amp; Print Slip
                 </Button>
+                <label> {this.props.message} </label>
               </Col>
             </Row>
           </Form>
@@ -271,17 +317,31 @@ class WeightEntry extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  console.log(state.weighentry.supplierdata);
+  
+  return ({
   formdata: state.weighentry.formdata,
-  data: state.weighentry.data
+  lorrydata: state.weighentry.lorrydata,
+  supplierdata: state.weighentry.supplierdata,
+  message: state.weighentry.message,
+  addedLorry: state.addlorry.isSuccess,
+  addedSupplier: state.addSupplier.isSuccess
 });
+}
 const mapDispatchToProps = dispatch => ({
   formData: payload => dispatch(weighEntryFormData(payload)),
   weighentrySubmit: data => dispatch(weighEntry(data)),
   getLorryData: () => dispatch(getLorry()),
   getLocalLorryData: data => dispatch(getLocalLorry(data)),
-  setLorryData: data => dispatch(setLorryInfo(data)),
-  weighDataReset: data => dispatch(weighEntryReset(data))
+  setLorryData: payload => dispatch(setLorryInfo(payload)),
+  weighDataReset: data => dispatch(weighEntryReset(data)),
+  addLorryResetSuccess: data => dispatch(addLorryResetSuccess()),
+  refresh: () => dispatch(weighEntryRefresh()),
+  getSupplierData: () => dispatch(getSupplier()),
+  getLocalSupplierData: data => dispatch(getLocalSupplier(data)),
+  setSupplierData: data => dispatch(setSupplierInfo(data)),
+  addSupplierResetSuccess: data => dispatch(addSupplierResetSuccess())
 });
 
 export default connect(

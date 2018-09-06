@@ -2,8 +2,14 @@ import React from "react";
 import { Row, Col, Card } from "antd";
 import { Line, Bar } from "react-chartjs-2";
 import { defaults } from "react-chartjs-2";
+import { connect } from "react-redux";
 
 class InnerDashboard extends React.Component {
+  componentWillMount() {
+    if (!this.props.loggedIn && !this.props.signedIn) {
+      this.props.history.push("/login");
+    }
+  }
   render() {
     defaults.global.defaultFontColor = "white";
     const TempData1 = {
@@ -107,5 +113,9 @@ class InnerDashboard extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  loggedIn: state.login.isSuccess,
+  signedIn: state.signup.isSuccess
+});
 
-export default InnerDashboard;
+export default connect(mapStateToProps)(InnerDashboard);

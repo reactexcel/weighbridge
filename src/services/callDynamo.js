@@ -1,8 +1,46 @@
-import { dynamodb } from "../config";
+import { dynamodb, docClient } from "../config";
+
+
+export function getDocBatchData(params) {
+  return new Promise((resolve, reject) => {
+    docClient.batchGet(params, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
 
 export function queryDb(params) {
   return new Promise((resolve, reject) => {
     dynamodb.query(params, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
+export function putDocData(params) {
+  return new Promise((resolve, reject) => {
+    docClient.put(params, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
+export function deleteData(params) {
+  return new Promise((resolve, reject) => {
+    dynamodb.deleteItem(params, function(err, data) {
       if (err) {
         reject(err);
       } else {

@@ -18,14 +18,18 @@ const initialState = {
     netweight: "",
     deduct: ""
   },
-  data: "",
+  lorrydata: "",
+  supplierdata: "",
   isLoadingWeighEntry: false,
   isSuccessWeighEntry: false,
   isErrorWeighEntry: false,
   isLoadingGetLorry: false,
   isSuccessGetLorry: false,
   isErrorGetLorry: false,
-  msg: ""
+  isLoadingGetSupplier: false,
+  isSuccessGetSupplier: false,
+  isErrorGetSupplier: false,
+  message: "",
 };
 const weighEntryFormData = (state, action) =>
   update(state, {
@@ -43,7 +47,8 @@ const weighEntrySuccess = (state, action) =>
   update(state, {
     isLoadingWeighEntry: { $set: false },
     isSuccessWeighEntry: { $set: true },
-    isErrorWeighEntry: { $set: false }
+    isErrorWeighEntry: { $set: false },
+    message: { $set: "weigh Entry Success" }
   });
 const weighEntryError = (state, action) =>
   update(state, {
@@ -59,7 +64,7 @@ const getLorryRequest = (state, action) =>
   });
 const getLorrySuccess = (state, action) =>
   update(state, {
-    data: { $set: action.payload },
+    lorrydata: { $set: action.payload },
     isLoadingGetLorry: { $set: false },
     isSuccessGetLorry: { $set: true },
     isErrorGetLorry: { $set: false }
@@ -71,9 +76,10 @@ const getLorryError = (state, action) =>
     isErrorGetLorry: { $set: true }
   });
 const getLocalLorryData = (state, action) =>
-  update(state, { data: { $set: action.payload } });
-const setLorryInfo = (state, action) =>
-  update(state, {
+  update(state, { lorrydata: { $set: action.payload } });
+
+const setLorryInfo = (state, action) => {
+  return update(state, {
     formdata: {
       lorrynumber: {
         $set: action.payload.lorryData[action.payload.id]["Number Plate"].S
@@ -95,10 +101,41 @@ const setLorryInfo = (state, action) =>
       }
     }
   });
-const weighEntryReset = (state, action) =>{
-  console.log(action);
-  
-  return update(state, {
+};
+const getSupplierRequest = (state, action) =>
+  update(state, {
+    isLoadingGetSupplier: { $set: true },
+    isSuccessGetSupplier: { $set: false },
+    isErrorGetSupplier: { $set: false }
+  });
+const getSupplierSuccess = (state, action) =>
+  update(state, {
+    supplierdata: { $set: action.payload },
+    isLoadingGetSupplier: { $set: false },
+    isSuccessGetSupplier: { $set: true },
+    isErrorGetSupplier: { $set: false }
+  });
+const getSupplierError = (state, action) =>
+  update(state, {
+    isLoadingGetSupplier: { $set: false },
+    isSuccessGetSupplier: { $set: false },
+    isErrorGetSupplier: { $set: true }
+  });
+const getLocalSupplierData = (state, action) =>{
+    console.log(action);
+    
+  return update(state, { supplierdata: { $set: action.payload } });
+}
+const setSupplierInfo = (state, action) =>
+  update(state, {
+    formdata: {
+      suppliername: {
+        $set: action.payload.supplierData[action.payload.id]["Name"].S
+      }
+    }
+  });
+const weighEntryReset = (state, action) =>
+  update(state, {
     formdata: {
       ticketnumber: { $set: action.payload.ticketnumber },
       supplierorigin: { $set: "" },
@@ -109,7 +146,10 @@ const weighEntryReset = (state, action) =>{
       deduct: { $set: "" }
     }
   });
-}
+const weighEntryRefresh = (state, action) =>
+  update(state, {
+    message: { $set: "" }
+  });
 export default handleActions(
   {
     [constants.WEIGH_ENTRY]: weighEntryRequest,
@@ -121,7 +161,13 @@ export default handleActions(
     [constants.GET_LORRY_ERROR]: getLorryError,
     [constants.GET_LOCAL_LORRY]: getLocalLorryData,
     [constants.SET_LORRY_INFO]: setLorryInfo,
-    [constants.WEIGH_ENTRY_RESET]: weighEntryReset
+    [constants.WEIGH_ENTRY_RESET]: weighEntryReset,
+    [constants.WEIGH_ENTRY_REFRESH]: weighEntryRefresh,
+    [constants.GET_SUPPLIER]: getSupplierRequest,
+    [constants.GET_SUPPLIER_SUCCESS]: getSupplierSuccess,
+    [constants.GET_SUPPLIER_ERROR]: getSupplierError,
+    [constants.GET_LOCAL_SUPPLIER]: getLocalSupplierData,
+    [constants.SET_SUPPLIER_INFO]: setSupplierInfo
   },
   initialState
 );

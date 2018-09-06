@@ -18,6 +18,22 @@ export function* lorryDataRequest(action) {
   }
 }
 
+export function* supplierDataRequest(action) {
+  let params = {
+    TableName: "Supplier"
+  };
+  try {
+    const response = yield call(getData, params);
+    if (response) {
+      yield call(storageHelper,"supplierData",response.Items);
+      yield put(actions.getSupplierSuccess(response.Items));
+    }
+  } catch (error) {
+    yield put(actions.getSupplierError(error));
+  }
+}
+
+
 export function* weighEntryRequest(action) {
   let params = {
     Item: {

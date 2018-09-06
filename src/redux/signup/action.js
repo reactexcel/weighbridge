@@ -1,44 +1,49 @@
 import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
-import { getData, putData, queryDb } from "../../services/callDynamo";
-import storageHelper from "../../services/offlineService";
+import { putData, queryDb } from "../../services/callDynamo";
 
-export function* signupRequest(action) {
-    var param = {
+export default function* signupRequest(action) {
+    let param = {
+        TableName: "UserProfile",
+        KeyConditionExpression: "UserId = :v", 
         ExpressionAttributeValues: {
-         ":v1": {
-           S: action.payload.email
-          }
-        }, 
-        KeyConditionExpression: "User Id = :v1", 
-        ProjectionExpression: "SongTitle", 
-        TableName: "Music"
-       };
-  let params = {
-      Item: {
-          "User Id": { 
-              "S": action.payload.userid
-          },
-          "name": {
-              "S": action.payload.name
-          },
-          "password": {
-              "S": action.payload.password
-          }
-      },
-    TableName: "UserProfile"
-  };
-  try {
-      const res = yield call(queryDb, params);
-   // const response = yield call(putData, params);
-    if(res){
-        console.log(res);
-        
-       // yield put(actions.logInSuccess(response));
-    }
+            ":v": {
+                S: action.payload.email
+            }
+        }
+    };
+    let params = {
+        Item: {
+            "UserId": { 
+                "S": action.payload.email
+            },
+            "Username": {
+                "S": action.payload.name
+            },
+            "Password": {
+                "S": action.payload.password
+            }
+        },
+        TableName: "UserProfile"
+    };
+    try {
+      const res = yield call(queryDb, param);
+        if(res.Count >0){
+            console.log(res);
+            yield put(actions.signUpError("Email Already Exists"));
+        } else {
+            try{
+                const response = yield call(putData, params);
+                if(response){
+                    yield put(actions.signUpSuccess(response));
+                }
+            } catch(error){
+                yield put(actions.signUpError("Server Error")); 
+            }
+
+        }
   } catch (error) {
       console.log(error);
-      
-      //yield put(actions.logInError());
+      yield put(actions.signUpError());
   }
 }

@@ -1,15 +1,23 @@
 import React, { Component } from "react";
-import { Form, Select, Button, Row, Col, Input } from "antd";
+import { Form, Select, Button, Row, Col, Input, Table, Icon } from "antd";
 import {
   addDriverOrAssistant,
-  addDriverOrAssistantFormData
+  addDriverOrAssistantFormData,
+  addDriverOrAssistantReset,
+  addDriverOrAssistantRefresh,
+  deleteDOA,
+  deleteDOAInState
 } from "../redux/actions";
 import { connect } from "react-redux";
 import constant from "../redux/constants";
+import storageHelper from "../services/offlineService";
 
 const Option = Select.Option;
 
 class AddDriverOrAssistant extends Component {
+  componentWillMount() {
+    this.props.refresh();
+  }
   idGenerator = () => {
     return Math.random()
       .toString(36)
@@ -25,15 +33,80 @@ class AddDriverOrAssistant extends Component {
       });
     }
   };
+  handleDelete = record => {
+    this.props.deleteDOA(record.id);
+    const data = this.props.data.filter(function(item) {
+      return item.key != record.key;
+    });
+    this.props.deleteInState(data);
+  };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addDriverOrAssistant({
-      id: this.idGenerator(),
-      data:this.props.formdata
-    });
+    if (navigator.onLine) {
+      this.props.addDriverOrAssistant({
+        id: this.idGenerator(),
+        data: this.props.formdata
+      });
+    } else {
+      storageHelper("addDriverOrAssistant", {
+        id: this.idGenerator(),
+        data: this.props.formdata
+      });
+    }
+    this.props.addDOAReset();
   };
 
   render() {
+    const columns = [
+      {
+        title: "ID",
+        dataIndex: "id",
+        key: "id"
+      },
+      {
+        title: "Name",
+        dataIndex: "name",
+        key: "name"
+      },
+      {
+        title: "Role",
+        dataIndex: "role",
+        key: "role"
+      },
+      {
+        title: "delete",
+        key: "action",
+        render: (text, record) => (
+          <span>
+            <Button onClick={() => this.handleDelete(record)}>
+              <Icon type="delete" />
+            </Button>
+          </span>
+        )
+      }
+    ];
+    /* const dataSource = [
+      {
+        key: "1",
+        id: "Mike",
+        name: 32,
+        role: "10 Downing Street"
+      },
+      {
+        key: "2",
+        id: "John",
+        name: 42,
+        role: "10 Downing Street"
+      }
+    ];
+     */
+    const dataSource = this.props.data;
+
+    /* if(data){
+      const dataSource = data.map((item) => {
+        return 
+      })
+    } */
     return (
       <div>
         <div className="dashboard">Add Driver Or Assistant</div>
@@ -48,6 +121,8 @@ class AddDriverOrAssistant extends Component {
                   name="role"
                   placeholder="Please select role"
                   onChange={this.handleChange}
+                  value={this.props.formdata.role}
+                  required
                 >
                   <Option value="driver">Driver</Option>
                   <Option value="assistant">Assistant</Option>
@@ -74,21 +149,36 @@ class AddDriverOrAssistant extends Component {
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
+                <label>{this.props.message}</label>
               </Col>
             </Row>
           </Form>
+          {this.props.data.length !== 0 && (
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={false}
+            />
+          )}
         </div>
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  formdata: state.addDriverOrAssistant.formData
+  formdata: state.addDriverOrAssistant.formData,
+  message: state.addDriverOrAssistant.message,
+  data: state.addDriverOrAssistant.data,
+  loggedin: state.login.isSuccess
 });
 const mapDispatchToProps = dispatch => ({
   addDriverOrAssistant: payload => dispatch(addDriverOrAssistant(payload)),
   addDriverOrAssistantFormData: data =>
-    dispatch(addDriverOrAssistantFormData(data))
+    dispatch(addDriverOrAssistantFormData(data)),
+  addDOAReset: () => dispatch(addDriverOrAssistantReset()),
+  refresh: () => dispatch(addDriverOrAssistantRefresh()),
+  deleteDOA: id => dispatch(deleteDOA(id)),
+  deleteInState: data => dispatch(deleteDOAInState(data))
 });
 
 export default connect(

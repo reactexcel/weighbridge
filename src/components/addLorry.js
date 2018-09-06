@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import { Form, Button, Row, Col, Input } from "antd";
-import { addLorry, addLorryFormData, addLorryReset } from "../redux/actions";
+import { Form, Button, Row, Col, Input, Table, Icon } from "antd";
+import {
+  addLorry,
+  addLorryFormData,
+  addLorryReset,
+  deleteLorry,
+  deleteLorryInState,
+  addLorryRefresh
+} from "../redux/actions";
 import { connect } from "react-redux";
 import storageHelper from "../services/offlineService";
 
 class AddLorry extends Component {
+  componentWillMount() {
+    this.props.refresh();
+  }
   handleSubmit = e => {
     e.preventDefault();
     if (navigator.onLine) {
@@ -12,13 +22,70 @@ class AddLorry extends Component {
     } else {
       storageHelper("addLorry", this.props.formdata);
     }
-    this.props.lorryDatareset();
+    this.props.lorryDataReset();
   };
-
+  handleDelete = record => {
+    console.log(record);
+    this.props.deleteLorry(record.lorrynumber);
+    //const data = this.props.data;
+    const data = this.props.data.filter(function(item) { 
+      console.log(item.key, record.key);
+      
+      return(item.key != record.key)} );
+    console.log(data);
+    
+    this.props.deleteInState(data);
+  };
   handleChange = e => {
     this.props.formData({ name: e.target.name, value: e.target.value });
   };
   render() {
+    const columns = [
+      {
+        title: "Lorry No.",
+        dataIndex: "lorrynumber",
+        key: "lorrynumber"
+      },
+      {
+        title: "Weigh w/o load",
+        dataIndex: "wwload",
+        key: "wwload"
+      },
+      {
+        title: "Driver Name 1",
+        dataIndex: "drivername1",
+        key: "drivername1"
+      },
+      {
+        title: "Driver Name 2",
+        dataIndex: "drivername2",
+        key: "drivername2"
+      },
+      {
+        title: "Co-Driver 1",
+        dataIndex: "codriver1",
+        key: "codriver1"
+      },
+      {
+        title: "Co-Driver 2",
+        dataIndex: "codriver2",
+        key: "codriver2"
+      },
+      {
+        title: "delete",
+        key: "action",
+        render: (text, record) => (
+          <span>
+            <Button onClick={() => this.handleDelete(record)}>
+              <Icon type="delete" />
+            </Button>
+          </span>
+        )
+      }
+    ];
+    
+    const dataSource = this.props.data;
+
     return (
       <div>
         <div className="dashboard">Add Lorry</div>
@@ -79,7 +146,6 @@ class AddLorry extends Component {
                   maxLength={25}
                   value={this.props.formdata.drivername2}
                   onChange={this.handleChange}
-                  required
                 />
               </Col>
             </Row>
@@ -94,7 +160,6 @@ class AddLorry extends Component {
                   maxLength={25}
                   value={this.props.formdata.codriver1}
                   onChange={this.handleChange}
-                  required
                 />
               </Col>
             </Row>
@@ -109,7 +174,6 @@ class AddLorry extends Component {
                   maxLength={25}
                   value={this.props.formdata.codriver2}
                   onChange={this.handleChange}
-                  required
                 />
               </Col>
             </Row>
@@ -118,9 +182,17 @@ class AddLorry extends Component {
                 <Button type="primary" htmlType="submit">
                   Submit
                 </Button>
+                <label>{this.props.message}</label>
               </Col>
             </Row>
           </Form>
+          {this.props.data.length !== 0 && (
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              pagination={false}
+            />
+          )}
         </div>
       </div>
     );
@@ -128,12 +200,17 @@ class AddLorry extends Component {
 }
 
 const mapStateToProps = state => ({
-  formdata: state.addlorry.formdata
+  formdata: state.addlorry.formdata,
+  message: state.addlorry.message,
+  data: state.addlorry.data
 });
 const mapDispatchToProps = dispatch => ({
   formData: payload => dispatch(addLorryFormData(payload)),
   addLorrySubmit: data => dispatch(addLorry(data)),
-  lorryDatareset: () => dispatch(addLorryReset())
+  lorryDataReset: () => dispatch(addLorryReset()),
+  deleteLorry: data => dispatch(deleteLorry(data)),
+  deleteInState: data =>dispatch(deleteLorryInState(data)),
+  refresh: () => dispatch(addLorryRefresh())
 });
 
 export default connect(
