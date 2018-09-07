@@ -22,7 +22,12 @@ export default function* loginRequest(action) {
         yield put(actions.loginError("Email or Password do not match"));
       } else {
         if (response.Items[0].Password.S == action.payload.password) {
-          yield put(actions.loginSuccess());
+          yield put(
+            actions.loginSuccess({
+              username: response.Items[0].Username,
+              type: response.Items[0].UserType
+            })
+          );
         } else {
           yield put(actions.loginError("Incorrect Password"));
         }

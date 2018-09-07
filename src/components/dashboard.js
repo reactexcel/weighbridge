@@ -22,6 +22,7 @@ class Dashboard extends React.Component {
     this.props.logout();
   };
   render() {
+    console.log(this.props);
     
     const menu = (
       <Menu>
@@ -58,10 +59,10 @@ class Dashboard extends React.Component {
                 mode="inline"
                 theme="dark"
               >
-                {/* <Menu.Item>
+                <Menu.Item>
                   <Icon type="user" />
-                  User/Admin
-                </Menu.Item> */}
+                  {this.props.userData.username}
+                </Menu.Item>
                 <Menu.Item key="1">
                   <Link to="/dashboard">
                     <Icon type="dashboard" />
@@ -131,9 +132,9 @@ class Dashboard extends React.Component {
                   <Menu.Item key="13">
                     <Link to="/dashboard/adduser">Add User</Link>
                   </Menu.Item>
-                  <Menu.Item key="14">
+                  {/* <Menu.Item key="14">
                     <Link to="/dashboard/deleteuser">Delete User</Link>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key="15">
                     {" "}
                     <Link to="/dashboard/modifyuserinfo">Modify User Info</Link>
@@ -158,7 +159,8 @@ class Dashboard extends React.Component {
 }
 const mapStateToProps = state => ({
   data: state.addlorry.data,
-  loggedIn: state.login.isSuccess
+  loggedIn: state.login.isSuccess,
+  userData: state.login.data
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -17,6 +17,8 @@ import {
   addSupplierRequest,
   deleteSupplierRequest
 } from "./addSupplier/action";
+import addUserRequest from "./adduser/action";
+import getUserRequest from "./modifyuserinfo/action";
 
 function* watchActions() {
   yield takeLatest(constants.WEIGH_ENTRY, weighEntryRequest);
@@ -34,6 +36,8 @@ function* watchActions() {
     addDriverOrAssistantRequest
   );
   yield takeLatest(constants.ADD_SUPPLIER, addSupplierRequest);
+  yield takeLatest(constants.ADD_USER, addUserRequest);
+  yield takeLatest(constants.GET_USER, getUserRequest);
 }
 
 export default function* rootSaga() {

@@ -1,5 +1,7 @@
 import React from "react";
-import { Table, Icon } from "antd";
+import { Table, Icon, Divider } from "antd";
+import { connect } from "react-redux";
+import { getUser } from "../redux/actions";
 
 class ModifyUserInfo extends React.Component {
   constructor(props) {
@@ -20,24 +22,41 @@ class ModifyUserInfo extends React.Component {
         }
       ]
     };
-    this.columns = [
+  }
+  componentWillMount() {
+    this.props.getUser();
+  }
+  render() {
+  const columns = [
       {
         title: "User Name",
-        dataIndex: "uname",
-        key: "uname",
-        width: "30%"
+        dataIndex: '["Username"].S',
+        key: "Username",
+        width: "20%"
       },
       {
         title: "Email",
-        dataIndex: "uid",
-        key: "uid",
-        width: "30%"
+        dataIndex: '["UserId"].S',
+        key: "Userid",
+        width: "20%"
       },
       {
-        title: "type",
-        dataIndex: "type",
-        key: "type",
-        width: "30%"
+        title: "Type",
+        dataIndex: '["UserType"].S',
+        key: "UserType",
+        width: "15%"
+      },
+      {
+        title: "Date Of Birth",
+        dataIndex: '["Dob"].S',
+        key: "Dob",
+        width: "10%"
+      },
+      {
+        title: "Address",
+        dataIndex: '["Address"].S',
+        key: "Address",
+        width: "20%"
       },
       {
         title: "Edit",
@@ -48,19 +67,23 @@ class ModifyUserInfo extends React.Component {
             <a href="#">
               <Icon type="edit" />
             </a>
+            <Divider type="vertical" />
+            <a href="#">
+              <Icon type="delete" />
+            </a>
           </span>
         )
       }
     ];
-  }
-  render() {
+    console.log(this.props.data);
+
     return (
       <div>
         <div className="dashboard">Modify User Info</div>
         <div className="content">
           <Table
-            dataSource={this.state.data}
-            columns={this.columns}
+            dataSource={this.props.data}
+            columns={columns}
             pagination={false}
           />
         </div>
@@ -68,4 +91,16 @@ class ModifyUserInfo extends React.Component {
     );
   }
 }
-export default ModifyUserInfo;
+
+const mapStateToProps = state => ({
+  data: state.modifyuserinfo.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  getUser: () => dispatch(getUser())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModifyUserInfo);

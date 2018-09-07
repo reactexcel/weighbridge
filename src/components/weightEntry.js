@@ -32,14 +32,10 @@ class WeightEntry extends Component {
     this.props.lorryModalClose();
   };
   componentWillReceiveProps(nextprops){
-    console.log(this.props);
-    console.log(nextprops.addedLorry);
     if(nextprops.addedLorry){
-      console.log("===============");
       this.props.getLorryData();
       this.props.addLorryResetSuccess();
     }
-    
   }
   componentWillMount() {
     const lorryData = storageHelper("lorryData");

@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
-import weighentry from "../redux/weightEntry/reducer";
-import addlorry from "../redux/addLorry/reducer";
-import dashboard from "../redux/dashboard/reducer";
-import login from "../redux/login/reducer";
-import signup from "../redux/signup/reducer";
+import weighentry from "./weightEntry/reducer";
+import addlorry from "./addLorry/reducer";
+import dashboard from "./dashboard/reducer";
+import login from "./login/reducer";
+import signup from "./signup/reducer";
 import addDriverOrAssistant from "./addDriverOrAssistant/reducer";
 import addSupplier from "./addSupplier/reducer";
+import adduser from "./adduser/reducer";
+import modifyuserinfo from "./modifyuserinfo/reducer";
 
 const makeRootReducer = combineReducers({
   weighentry: weighentry,
@@ -14,7 +16,9 @@ const makeRootReducer = combineReducers({
   login: login,
   signup: signup,
   addDriverOrAssistant: addDriverOrAssistant,
-  addSupplier: addSupplier
+  addSupplier: addSupplier,
+  adduser: adduser,
+  modifyuserinfo: modifyuserinfo
 });
 
 export default makeRootReducer;

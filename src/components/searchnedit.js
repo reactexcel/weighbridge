@@ -1,7 +1,9 @@
 import React from "react";
-import { Input, Table, Icon, Divider } from "antd";
+import { Input, Table, Icon, Divider, Radio } from "antd";
 
 const Search = Input.Search;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 class SearchnEdit extends React.Component {
   render() {
     const dataSource = [
@@ -97,6 +99,11 @@ class SearchnEdit extends React.Component {
       <div>
         <div className="dashboard">Search &amp; Edit</div>
         <div className="content">
+          <RadioGroup /* onChange={onChange} */ defaultValue="a">
+            <RadioButton value="a">Search Ticket</RadioButton>
+            <RadioButton value="b">Search Lorry</RadioButton>
+            <RadioButton value="c">Search Supplier</RadioButton>
+          </RadioGroup>
           <Search
             placeholder="input search text"
             onSearch={value => {}}

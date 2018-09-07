@@ -8,6 +8,8 @@ const FormItem = Form.Item;
 class Login extends Component {
   componentWillUpdate(props){
     if (props.loginSuccess) {
+      console.log("pppppppp");
+      
       props.history.push("/dashboard");
     }
   }

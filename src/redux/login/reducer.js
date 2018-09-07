@@ -7,7 +7,10 @@ let initialState = {
     name: "",
     password: ""
   },
-  data: {},
+  data: {
+    username: "",
+    type: ""
+  },
   isLoggedIn: false,
   isLoading: false,
   isError: false,
@@ -30,7 +33,10 @@ const userLoginRequest = (state, action) =>
   });
 const userLoginSuccess = (state, action) =>
   update(state, {
-    data: { $set: action.payload },
+    data: {
+      username: { $set: action.payload.username.S },
+      type: { $set: action.payload.type ? action.payload.type.S : "" },
+    },
     isLoggedIn: { $set: true },
     isLoading: { $set: false },
     isError: { $set: false },

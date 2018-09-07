@@ -84,3 +84,12 @@ export const addSupplierFormData = createAction(constants.ADD_SUPPLIER_FORM_DATA
 export const addSupplierReset = createAction(constants.ADD_SUPPLIER_RESET);
 export const addSupplierResetSuccess = createAction(constants.ADD_SUPPLIER_RESET_SUCCESS);
 export const addSupplierRefresh = createAction(constants.ADD_SUPPLIER_REFRESH);
+
+export const addUser = createAction(constants.ADD_USER);
+export const addUserSuccess = createAction(constants.ADD_USER_SUCCESS);
+export const addUserError = createAction(constants.ADD_USER_ERROR);
+export const addUserFormData = createAction(constants.ADD_USER_FORMDATA);
+
+export const getUser = createAction(constants.GET_USER);
+export const getUserSuccess = createAction(constants.GET_USER_SUCCESS);
+export const getUserError = createAction(constants.GET_USER_ERROR);
