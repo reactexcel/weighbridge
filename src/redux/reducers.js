@@ -8,6 +8,7 @@ import addDriverOrAssistant from "./addDriverOrAssistant/reducer";
 import addSupplier from "./addSupplier/reducer";
 import adduser from "./adduser/reducer";
 import modifyuserinfo from "./modifyuserinfo/reducer";
+import searchnedit from "./searchnedit/reducer";
 
 const makeRootReducer = combineReducers({
   weighentry: weighentry,
@@ -18,7 +19,8 @@ const makeRootReducer = combineReducers({
   addDriverOrAssistant: addDriverOrAssistant,
   addSupplier: addSupplier,
   adduser: adduser,
-  modifyuserinfo: modifyuserinfo
+  modifyuserinfo: modifyuserinfo,
+  searchnedit: searchnedit
 });
 
 export default makeRootReducer;

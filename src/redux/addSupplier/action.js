@@ -46,7 +46,7 @@ export function* addSupplierRequest(action) {
         S: action.payload.data.licenseexpirydate
       }
     },
-    TableName: "Supplier"
+    TableName: "SupplierTable"
   };
   const data = {
     key: i++,
@@ -72,7 +72,7 @@ export function* deleteSupplierRequest(action){
         S: action.payload
       }
     },
-    TableName: "Supplier"
+    TableName: "SupplierTable"
   };
   try {
     const response = yield call(deleteData, params);

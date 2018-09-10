@@ -6,22 +6,6 @@ import { getUser } from "../redux/actions";
 class ModifyUserInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [
-        {
-          key: 1,
-          uid: "abc",
-          uname: "xyz",
-          type: "Payout User"
-        },
-        {
-          key: 2,
-          uid: "abc",
-          uname: "xyz",
-          type: "Data Entry User"
-        }
-      ]
-    };
   }
   componentWillMount() {
     this.props.getUser();
@@ -75,8 +59,6 @@ class ModifyUserInfo extends React.Component {
         )
       }
     ];
-    console.log(this.props.data);
-
     return (
       <div>
         <div className="dashboard">Modify User Info</div>

@@ -3,7 +3,6 @@ import * as actions from "../actions";
 import { putData, putDocData } from "../../services/callDynamo";
 
 export default function* addUserRequest(action) {
-  console.log(action);
   const params = {
       Item: {
         "UserId": action.payload.email,

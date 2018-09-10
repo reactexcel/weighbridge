@@ -48,7 +48,7 @@ const userSignUpError = (state, action) =>
   });
 const signUpRedirect = (state, action) =>
   update(state, {
-    isSuccess: { $set: false },
+   // isSuccess: { $set: false },
     formdata: {
       name: { $set: "" },
       email: { $set: "" },

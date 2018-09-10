@@ -16,7 +16,12 @@ class Signup extends Component {
   componentWillUpdate(props) {
     if (props.signupSuccess) {
       props.history.push("/dashboard");
-      props.signupRedirect();
+    }
+  }
+  componentWillMount(){
+    this.props.signupRedirect();
+    if(this.props.signupSuccess){
+      this.props.history.push("/dashboard");
     }
   }
   handleChange = e => {

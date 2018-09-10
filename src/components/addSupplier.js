@@ -14,7 +14,7 @@ import {
   addSupplier,
   addSupplierFormData,
   addSupplierReset,
-  addDriverOrAssistantRefresh,
+  addSupplierRefresh,
   deleteSupplier,
   deleteSupplierInState
 } from "../redux/actions";
@@ -75,12 +75,12 @@ class AddSupplier extends Component {
     if (navigator.onLine) {
       this.props.addSupplier({
         id: this.idGenerator(),
-        data: this.props.formData
+        data: this.props.formdata
       });
     } else {
       storageHelper("addSupplier", {
         id: this.idGenerator(),
-        data: this.props.formData
+        data: this.props.formdata
       });
     }
     this.props.supplierDataReset();
@@ -137,6 +137,7 @@ class AddSupplier extends Component {
                   type="text"
                   name="name"
                   maxLength={40}
+                  value={this.props.formdata.name}
                   placeholder="Please enter the supplier name"
                   onChange={e => this.handleChange(e)}
                   required
@@ -152,6 +153,7 @@ class AddSupplier extends Component {
                   type="text"
                   name="ic"
                   maxLength={14}
+                  value={this.props.formdata.ic}
                   placeholder="Please enter the IC"
                   onChange={e => this.handleChange(e)}
                   required
@@ -180,6 +182,7 @@ class AddSupplier extends Component {
                   name="address1"
                   placeholder="Address"
                   maxLength={40}
+                  value={this.props.formdata.address1}
                   onChange={e => this.handleChange(e)}
                   required
                 />
@@ -194,6 +197,7 @@ class AddSupplier extends Component {
                   name="address2"
                   placeholder="Address"
                   maxLength={40}
+                  value={this.props.formdata.address2}
                   onChange={e => this.handleChange(e)}
                   required
                 />
@@ -208,6 +212,7 @@ class AddSupplier extends Component {
                   type="text"
                   name="poskod"
                   maxLength={5}
+                  value={this.props.formdata.poskod}
                   placeholder="Please enter the poskod"
                   onChange={e => this.handleChange(e)}
                   required
@@ -222,6 +227,7 @@ class AddSupplier extends Component {
                 <Input
                   type="number"
                   name="phoneno"
+                  value={this.props.formdata.phoneno}
                   placeholder="Please enter the phone no"
                   onChange={e => this.handleChange(e)}
                   required
@@ -263,6 +269,7 @@ class AddSupplier extends Component {
                   type="text"
                   name="spousename"
                   maxLength={40}
+                  value={this.props.formdata.spousename}
                   placeholder="Please enter the spouse name"
                   onChange={e => this.handleChange(e)}
                   required
@@ -291,6 +298,7 @@ class AddSupplier extends Component {
                   type="text"
                   name="licenseno"
                   maxLength={14}
+                  value={this.props.formdata.licenseno}
                   placeholder="Please enter the license no"
                   onChange={e => this.handleChange(e)}
                   required
@@ -332,7 +340,7 @@ class AddSupplier extends Component {
   }
 }
 const mapStateToProps = state => ({
-  formData: state.addSupplier.formData,
+  formdata: state.addSupplier.formData,
   message: state.addSupplier.message,
   data: state.addSupplier.data
 });
@@ -340,7 +348,7 @@ const mapDispatchToProps = dispatch => ({
   addSupplier: payload => dispatch(addSupplier(payload)),
   addSupplierFormData: data => dispatch(addSupplierFormData(data)),
   supplierDataReset: () => dispatch(addSupplierReset()),
-  refresh: () => dispatch(addDriverOrAssistantRefresh()),
+  refresh: () => dispatch(addSupplierRefresh()),
   deleteSupplier: (id) => dispatch(deleteSupplier(id)),
   deleteInState: data => dispatch(deleteSupplierInState(data))
 });

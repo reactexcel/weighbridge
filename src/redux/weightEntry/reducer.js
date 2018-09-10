@@ -29,6 +29,9 @@ const initialState = {
   isLoadingGetSupplier: false,
   isSuccessGetSupplier: false,
   isErrorGetSupplier: false,
+  isLoadingGetTicket: false,
+  isSuccessGetTicket: false,
+  isErrorGetTicket: false,
   message: "",
   lorryModal: false
 };
@@ -46,6 +49,14 @@ const weighEntryRequest = (state, action) =>
   });
 const weighEntrySuccess = (state, action) =>
   update(state, {
+    formdata: {
+      supplierorigin: { $set: "" },
+      suppliername: { $set: "" },
+      wload: { $set: "" },
+      unripe: { $set: "" },
+      netweight: { $set: "" },
+      deduct: { $set: "" }
+    },
     isLoadingWeighEntry: { $set: false },
     isSuccessWeighEntry: { $set: true },
     isErrorWeighEntry: { $set: false },
@@ -142,7 +153,7 @@ const setSupplierInfo = (state, action) =>
 const weighEntryReset = (state, action) =>
   update(state, {
     formdata: {
-      ticketnumber: { $set: action.payload.ticketnumber },
+      //ticketnumber: { $set: "" /* action.payload.ticketnumber */ },
       supplierorigin: { $set: "" },
       suppliername: { $set: "" },
       wload: { $set: "" },
@@ -163,7 +174,25 @@ const lorryModalClose = (state, action) =>
   update(state, {
     lorryModal: { $set: false }
   });
-
+  const handleTicketNumberRequest = (state, action) =>
+  update(state, {
+    isLoadingGetTicket: {$set: true},
+  isSuccessGetTicket: {$set: false},
+  isErrorGetTicket: {$set: false},
+  });
+const handleTicketNumberSuccess = (state, action) =>
+  update(state, {
+    formdata:{ ticketnumber: { $set: "A" + action.payload }},
+    isLoadingGetTicket: { $set: false },
+    isSuccessGetTicket: { $set: true },
+    isErrorGetTicket: { $set: false }
+  });
+const handleTicketNumberError = (state, action) =>
+  update(state, {
+    isLoadingGetTicket: { $set: false },
+    isSuccessGetTicket: { $set: false },
+    isErrorGetTicket: { $set: true }
+  });
 export default handleActions(
   {
     [constants.WEIGH_ENTRY]: weighEntryRequest,
@@ -183,7 +212,10 @@ export default handleActions(
     [constants.GET_LOCAL_SUPPLIER]: getLocalSupplierData,
     [constants.SET_SUPPLIER_INFO]: setSupplierInfo,
     [constants.LORRY_MODAL_OPEN]: lorryModalOpen,
-    [constants.LORRY_MODAL_CLOSE]: lorryModalClose
+    [constants.LORRY_MODAL_CLOSE]: lorryModalClose,
+    [constants.GET_TICKET_NUMBER]: handleTicketNumberRequest,
+    [constants.GET_TICKET_NUMBER_SUCCESS]: handleTicketNumberSuccess,
+    [constants.GET_TICKET_NUMBER_ERROR]: handleTicketNumberError,
   },
   initialState
 );

@@ -24,10 +24,7 @@ const addUserRequest = (state, action) =>
     isError: { $set: false },
 });
 const addUserSuccess = (state, action) =>{
-    console.log(state);
-    
  return update(state, {
-    // data: { $push: [action.payload] },
     isLoading: { $set: false },
     isSuccess: { $set: true },
     isError: { $set: false },

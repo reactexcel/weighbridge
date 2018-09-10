@@ -16,14 +16,15 @@ class Dashboard extends React.Component {
     window.addEventListener("online", asyncRepeat);
   }
   componentWillMount() {
+    if (!this.props.loggedIn && !this.props.signedIn) {
+      this.props.history.push("/login");
+    }
     storageHelper();
   }
   handleLogout = () => {
     this.props.logout();
   };
   render() {
-    console.log(this.props);
-    
     const menu = (
       <Menu>
         {this.props.data.length &&
@@ -63,24 +64,32 @@ class Dashboard extends React.Component {
                   <Icon type="user" />
                   {this.props.userData.username}
                 </Menu.Item>
-                <Menu.Item key="1">
-                  <Link to="/dashboard">
-                    <Icon type="dashboard" />
-                    Dashboard
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="2">
-                  <Link to="/dashboard/weightentry">
-                    <Icon type="area-chart" />
-                    Weigh Entry
-                  </Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                  <Link to="/dashboard/searchnedit">
-                    <Icon type="table" />
-                    Search &amp; Edit
-                  </Link>
-                </Menu.Item>
+                {this.props.userData.type === "admin" && (
+                  <Menu.Item key="1">
+                    <Link to="/dashboard">
+                      <Icon type="dashboard" />
+                      Dashboard
+                    </Link>
+                  </Menu.Item>
+                )}
+                {(this.props.userData.type === "admin" ||
+                  this.props.userData.type === "dataentry") && (
+                  <Menu.Item key="2">
+                    <Link to="/dashboard/weightentry">
+                      <Icon type="area-chart" />
+                      Weigh Entry
+                    </Link>
+                  </Menu.Item>
+                )}
+                {(this.props.userData.type === "admin" ||
+                  this.props.userData.type === "dataentry") && (
+                  <Menu.Item key="3">
+                    <Link to="/dashboard/searchnedit">
+                      <Icon type="table" />
+                      Search &amp; Edit
+                    </Link>
+                  </Menu.Item>
+                )}
                 <SubMenu
                   key="sub2"
                   title={
@@ -93,59 +102,64 @@ class Dashboard extends React.Component {
                   <Menu.Item key="5">Option 5</Menu.Item>
                   <Menu.Item key="6">Option 6</Menu.Item>
                 </SubMenu>
-                <SubMenu
-                  key="sub4"
-                  title={
-                    <span>
-                      <Icon type="file" />
-                      <span>Operations</span>
-                    </span>
-                  }
-                >
-                  <Menu.Item key="9">
-                    <Link to="/dashboard/adddriverorassistant">
-                      Add Driver/Assistant
+                {(this.props.userData.type === "admin" ||
+                  this.props.userData.type === "dataentry") && (
+                  <SubMenu
+                    key="sub4"
+                    title={
+                      <span>
+                        <Icon type="file" />
+                        <span>Operations</span>
+                      </span>
+                    }
+                  >
+                    <Menu.Item key="9">
+                      <Link to="/dashboard/adddriverorassistant">
+                        Add Driver/Assistant
+                      </Link>
+                    </Menu.Item>
+                    <Menu.Item key="10">
+                      <Link to="/dashboard/addlorry">Add Lorry</Link>
+                    </Menu.Item>
+                    <Menu.Item key="11">
+                      <Link to="/dashboard/addsupplier">Add Supplier</Link>
+                    </Menu.Item>
+                  </SubMenu>
+                )}
+                {(this.props.userData.type === "admin" ||
+                  this.props.userData.type === "payout") && (
+                  <Menu.Item key="12">
+                    <Link to="/dashboard/payments">
+                      <Icon type="wallet" />
+                      Payments
                     </Link>
                   </Menu.Item>
-                  <Menu.Item key="10">
-                    <Link to="/dashboard/addlorry">Add Lorry</Link>
-                  </Menu.Item>
-                  <Menu.Item key="11">
-                    <Link to="/dashboard/addsupplier">Add Supplier</Link>
-                  </Menu.Item>
-                </SubMenu>
-                <Menu.Item key="12">
-                  <Link to="/dashboard/payments">
-                    <Icon type="wallet" />
-                    Payments
-                  </Link>
-                </Menu.Item>
-                <SubMenu
-                  key="sub6"
-                  title={
-                    <span>
-                      <Icon type="database" />
-                      <span>User Management</span>
-                    </span>
-                  }
-                >
-                  <Menu.Item key="13">
-                    <Link to="/dashboard/adduser">Add User</Link>
-                  </Menu.Item>
-                  {/* <Menu.Item key="14">
-                    <Link to="/dashboard/deleteuser">Delete User</Link>
-                  </Menu.Item> */}
-                  <Menu.Item key="15">
-                    {" "}
-                    <Link to="/dashboard/modifyuserinfo">Modify User Info</Link>
-                  </Menu.Item>
-                </SubMenu>
-                <Menu.Item key="16">
+                )}
+                {this.props.userData.type === "admin" && (
+                  <SubMenu
+                    key="sub6"
+                    title={
+                      <span>
+                        <Icon type="database" />
+                        <span>User Management</span>
+                      </span>
+                    }
+                  >
+                    <Menu.Item key="13">
+                      <Link to="/dashboard/adduser">Add User</Link>
+                    </Menu.Item>
+                    <Menu.Item key="14">
+                      {" "}
+                      <Link to="/dashboard/modifyuserinfo">
+                        Modify User Info
+                      </Link>
+                    </Menu.Item>
+                  </SubMenu>
+                )}
+                <Menu.Item key="15">
                   <Link to="/" onClick={this.handleLogout}>
-                    {/* <Button onClick={this.handleLogout}> */}
                     <Icon type="poweroff" />
                     Logout
-                    {/* </Button> */}
                   </Link>
                 </Menu.Item>
               </Menu>
@@ -160,6 +174,7 @@ class Dashboard extends React.Component {
 const mapStateToProps = state => ({
   data: state.addlorry.data,
   loggedIn: state.login.isSuccess,
+  signedIn: state.signup.isSuccess,
   userData: state.login.data
 });
 
@@ -167,7 +182,9 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logoutSuccess())
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Dashboard)
+);

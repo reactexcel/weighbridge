@@ -1,5 +1,17 @@
 import { dynamodb, docClient } from "../config";
 
+export function updateData(params) {
+  return new Promise((resolve, reject) => {
+    docClient.update(params, function(err, data) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
 
 export function getDocBatchData(params) {
   return new Promise((resolve, reject) => {

@@ -5,7 +5,8 @@ import loginRequest from "./login/action";
 import {
   weighEntryRequest,
   lorryDataRequest,
-  supplierDataRequest
+  supplierDataRequest,
+  getTicketNumberRequest
 } from "./weightEntry/action";
 import { setBatchDataRequest } from "./dashboard/action";
 import { addLorryRequest, deleteLorryRequest } from "./addLorry/action";
@@ -19,6 +20,7 @@ import {
 } from "./addSupplier/action";
 import addUserRequest from "./adduser/action";
 import getUserRequest from "./modifyuserinfo/action";
+import getSearchEditRequest from "./searchnedit/action";
 
 function* watchActions() {
   yield takeLatest(constants.WEIGH_ENTRY, weighEntryRequest);
@@ -38,6 +40,8 @@ function* watchActions() {
   yield takeLatest(constants.ADD_SUPPLIER, addSupplierRequest);
   yield takeLatest(constants.ADD_USER, addUserRequest);
   yield takeLatest(constants.GET_USER, getUserRequest);
+  yield takeLatest(constants.GET_SEARCH_EDIT, getSearchEditRequest);
+  yield takeLatest(constants.GET_TICKET_NUMBER, getTicketNumberRequest);
 }
 
 export default function* rootSaga() {

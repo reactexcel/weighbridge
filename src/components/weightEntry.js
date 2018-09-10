@@ -15,7 +15,8 @@ import {
   setSupplierInfo,
   addSupplierResetSuccess,
   lorryModalOpen,
-  lorryModalClose
+  lorryModalClose,
+  getTicketNumber
 } from "../redux/actions";
 import storageHelper from "../services/offlineService";
 import AddLorry from "./addLorry";
@@ -31,8 +32,8 @@ class WeightEntry extends Component {
   handleCancel = e => {
     this.props.lorryModalClose();
   };
-  componentWillReceiveProps(nextprops){
-    if(nextprops.addedLorry){
+  componentWillReceiveProps(nextprops) {
+    if (nextprops.addedLorry) {
       this.props.getLorryData();
       this.props.addLorryResetSuccess();
     }
@@ -53,12 +54,9 @@ class WeightEntry extends Component {
     } else {
       this.props.getLocalSupplierData(supplierData);
     }
-    this.props.formData({
-      name: "ticketnumber",
-      value: Math.random()
-        .toString(36)
-        .substr(2, 8)
-    });
+    if (this.props.formdata.ticketnumber === "") {
+      this.props.getTicketNumber();
+    }
     this.props.refresh();
   }
   handleWeighSubmit = e => {
@@ -68,12 +66,8 @@ class WeightEntry extends Component {
       this.props.weighentrySubmit(this.props.formdata);
     } else {
       storageHelper("weighEntry", this.props.formdata);
+      this.props.weighDataReset();
     }
-    this.props.weighDataReset({
-      ticketnumber: Math.random()
-        .toString(36)
-        .substr(2, 8)
-    });
   };
   handleSelectChange = e => {
     const lorryData = storageHelper("lorryData");
@@ -81,7 +75,7 @@ class WeightEntry extends Component {
   };
   handleSelectSupplierChange = e => {
     const supplierData = storageHelper("supplierData");
-    this.props.s({ supplierData: supplierData, id: e });
+    this.props.setSupplierData({ supplierData: supplierData, id: e });
   };
   handleChange = e => {
     this.props.formData({ name: e.target.name, value: e.target.value });
@@ -152,7 +146,7 @@ class WeightEntry extends Component {
                   onCancel={this.handleCancel}
                   footer={null}
                 >
-                  <AddLorry flag={true}/>
+                  <AddLorry flag={true} />
                 </Modal>
               </Col>
             </Row>
@@ -349,7 +343,7 @@ const mapDispatchToProps = dispatch => ({
   getLorryData: () => dispatch(getLorry()),
   getLocalLorryData: data => dispatch(getLocalLorry(data)),
   setLorryData: payload => dispatch(setLorryInfo(payload)),
-  weighDataReset: data => dispatch(weighEntryReset(data)),
+  weighDataReset: () => dispatch(weighEntryReset()),
   addLorryResetSuccess: data => dispatch(addLorryResetSuccess()),
   refresh: () => dispatch(weighEntryRefresh()),
   getSupplierData: () => dispatch(getSupplier()),
@@ -357,7 +351,8 @@ const mapDispatchToProps = dispatch => ({
   setSupplierData: data => dispatch(setSupplierInfo(data)),
   addSupplierResetSuccess: data => dispatch(addSupplierResetSuccess()),
   lorryModalOpen: () => dispatch(lorryModalOpen()),
-  lorryModalClose: () => dispatch(lorryModalClose())
+  lorryModalClose: () => dispatch(lorryModalClose()),
+  getTicketNumber: () => dispatch(getTicketNumber())
 });
 
 export default connect(

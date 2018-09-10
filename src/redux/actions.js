@@ -93,3 +93,12 @@ export const addUserFormData = createAction(constants.ADD_USER_FORMDATA);
 export const getUser = createAction(constants.GET_USER);
 export const getUserSuccess = createAction(constants.GET_USER_SUCCESS);
 export const getUserError = createAction(constants.GET_USER_ERROR);
+
+export const getTicketNumber = createAction(constants.GET_TICKET_NUMBER);
+export const getTicketNumberSuccess = createAction(constants.GET_TICKET_NUMBER_SUCCESS);
+export const getTicketNumberError = createAction(constants.GET_TICKET_NUMBER_ERROR);
+
+export const searchEditFormData = createAction(constants.SEARCH_EDIT_FORMDATA);
+export const searchEdit = createAction(constants.GET_SEARCH_EDIT);
+export const searchEditSuccess = createAction(constants.GET_SEARCH_EDIT_SUCCESS);
+export const searchEditError = createAction(constants.GET_SEARCH_EDIT_ERROR);

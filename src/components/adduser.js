@@ -137,7 +137,6 @@ class AddUser extends React.Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state);
   return {
     formdata: state.adduser.formdata,
     message: state.adduser.message

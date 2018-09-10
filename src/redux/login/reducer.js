@@ -35,7 +35,7 @@ const userLoginSuccess = (state, action) =>
   update(state, {
     data: {
       username: { $set: action.payload.username.S },
-      type: { $set: action.payload.type ? action.payload.type.S : "" },
+      type: { $set: action.payload.type.S },
     },
     isLoggedIn: { $set: true },
     isLoading: { $set: false },

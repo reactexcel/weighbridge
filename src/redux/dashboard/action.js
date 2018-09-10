@@ -155,7 +155,7 @@ export function* setBatchDataRequest(action){
     const requestArray = [
       { "Lorry": lorryItems },
       { "WeighTable": weighItems },
-      { "Supplier": supplierItems },
+      { "SupplierTable": supplierItems },
       { "DriverAndAssistant": driverOrAssistantItems }
     ];
     let requestItems = {};
