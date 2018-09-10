@@ -5,11 +5,6 @@ import { defaults } from "react-chartjs-2";
 import { connect } from "react-redux";
 
 class InnerDashboard extends React.Component {
-  /* componentWillMount() {
-    if (!this.props.loggedIn && !this.props.signedIn) {
-      this.props.history.push("/login");
-    }
-  } */
   render() {
     defaults.global.defaultFontColor = "white";
     const TempData1 = {

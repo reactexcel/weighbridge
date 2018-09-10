@@ -153,7 +153,6 @@ const setSupplierInfo = (state, action) =>
 const weighEntryReset = (state, action) =>
   update(state, {
     formdata: {
-      //ticketnumber: { $set: "" /* action.payload.ticketnumber */ },
       supplierorigin: { $set: "" },
       suppliername: { $set: "" },
       wload: { $set: "" },

@@ -119,7 +119,6 @@ class AddUser extends React.Component {
                     onChange={(date, dateString) =>
                       this.handleDobDateChange(date, dateString)
                     }
-                     /* value={this.props.formdata.dob} */ 
                     format={dateFormat}
                   />
                 </Col>

@@ -53,5 +53,3 @@ export function* deleteDOARequest(action) {
     yield put(actions.deleteDOAError(error));
   }
 }
-
-//export default addDriverOrAssistantRequest;

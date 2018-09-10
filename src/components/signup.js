@@ -28,7 +28,6 @@ class Signup extends Component {
     this.props.formData({ name: e.target.name, value: e.target.value });
   };
   handleCheckChange = e => {
-    //this.props.formData({name: e.target.name, value: !e.target.value})
     this.props.Checked(!e.target.value);
   }
   handleSubmit = e => {

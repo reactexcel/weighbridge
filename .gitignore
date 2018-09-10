@@ -20,9 +20,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-<<<<<<< HEAD
 #config 
-=======
-#config
->>>>>>> a4537d1d646e87aac4bb8835e4d626a7dfeeb953
 /src/config.js

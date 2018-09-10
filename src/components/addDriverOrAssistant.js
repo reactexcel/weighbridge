@@ -85,29 +85,8 @@ class AddDriverOrAssistant extends Component {
         )
       }
     ];
-    /* const dataSource = [
-      {
-        key: "1",
-        id: "Mike",
-        name: 32,
-        role: "10 Downing Street"
-      },
-      {
-        key: "2",
-        id: "John",
-        name: 42,
-        role: "10 Downing Street"
-      }
-    ];
-     */
     const dataSource = this.props.data;
-
-    /* if(data){
-      const dataSource = data.map((item) => {
-        return 
-      })
-    } */
-    return (
+return (
       <div>
         <div className="dashboard">Add Driver Or Assistant</div>
         <div className="input-entry-form">

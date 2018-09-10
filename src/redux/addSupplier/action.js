@@ -83,5 +83,3 @@ export function* deleteSupplierRequest(action){
     yield put(actions.deleteSupplierError(error));
   }
 }
-
-//export default addSupplierRequest;

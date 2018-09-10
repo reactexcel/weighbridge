@@ -69,7 +69,6 @@ class SearchnEdit extends React.Component {
         }
       ];
     } else if (this.props.data['Number Plate']) {
-     // dataSource = this.props.lorryData;
       columns = [
         {
           title: "Lorry Number",
@@ -107,19 +106,6 @@ class SearchnEdit extends React.Component {
           key: "cd2",
           width: "12%"
         },
-        /* {
-        title: "Driver2 Name",
-        dataIndex: "dn2",
-        key: "dn2",
-        width: "10%"
-      }, 
-      {
-        title: "Auto Entry",
-        dataIndex: "ae",
-        key: "ae",
-        width: "8%"
-      },
-*/
         {
           title: "",
           key: "action",
@@ -135,7 +121,6 @@ class SearchnEdit extends React.Component {
         }
       ];
     } else if (this.props.data['Supplier Id']) {
-      //dataSource = this.props.weighData;
       columns = [
         {
           title: "Supplier Id",
