@@ -22,12 +22,12 @@ const searchEditRequest = (state, action) =>
     isError: { $set: false }
   });
 const searchEditSuccess = (state, action) => {
-    return update(state, {
-    data: {$set: action.payload},
-      isLoading: { $set: false },
-      isSuccess: { $set: true },
-      isError: { $set: false }
-    });
+  return update(state, {
+    data: { $set: action.payload ? action.payload : {} },
+    isLoading: { $set: false },
+    isSuccess: { $set: true },
+    isError: { $set: false }
+  });
 };
 const searchEditError = (state, action) =>
   update(state, {
