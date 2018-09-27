@@ -11,7 +11,6 @@ class ModifyUserInfo extends React.Component {
     this.props.getUser();
   }
   handleDelete = record => {
-    console.log(record);
     this.props.deleteUser(record.UserId.S);
   };
   render() {
