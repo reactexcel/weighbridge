@@ -94,6 +94,10 @@ export const getUser = createAction(constants.GET_USER);
 export const getUserSuccess = createAction(constants.GET_USER_SUCCESS);
 export const getUserError = createAction(constants.GET_USER_ERROR);
 
+export const deleteUser = createAction(constants.DELETE_USER);
+export const deleteUserSuccess = createAction(constants.DELETE_USER_SUCCESS);
+export const deleteUserError = createAction(constants.DELETE_USER_ERROR);
+
 export const getTicketNumber = createAction(constants.GET_TICKET_NUMBER);
 export const getTicketNumberSuccess = createAction(constants.GET_TICKET_NUMBER_SUCCESS);
 export const getTicketNumberError = createAction(constants.GET_TICKET_NUMBER_ERROR);

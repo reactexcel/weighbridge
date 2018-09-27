@@ -19,7 +19,7 @@ import {
   deleteSupplierRequest
 } from "./addSupplier/action";
 import addUserRequest from "./adduser/action";
-import getUserRequest from "./modifyuserinfo/action";
+import { getUserRequest, deleteUserRequest } from "./modifyuserinfo/action";
 import getSearchEditRequest from "./searchnedit/action";
 
 function* watchActions() {
@@ -40,6 +40,7 @@ function* watchActions() {
   yield takeLatest(constants.ADD_SUPPLIER, addSupplierRequest);
   yield takeLatest(constants.ADD_USER, addUserRequest);
   yield takeLatest(constants.GET_USER, getUserRequest);
+  yield takeLatest(constants.DELETE_USER, deleteUserRequest);
   yield takeLatest(constants.GET_SEARCH_EDIT, getSearchEditRequest);
   yield takeLatest(constants.GET_TICKET_NUMBER, getTicketNumberRequest);
 }

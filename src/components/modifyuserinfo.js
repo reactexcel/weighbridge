@@ -1,7 +1,7 @@
 import React from "react";
-import { Table, Icon, Divider } from "antd";
+import { Table, Icon, Divider, Button } from "antd";
 import { connect } from "react-redux";
-import { getUser } from "../redux/actions";
+import { getUser, deleteUser } from "../redux/actions";
 
 class ModifyUserInfo extends React.Component {
   constructor(props) {
@@ -10,8 +10,12 @@ class ModifyUserInfo extends React.Component {
   componentWillMount() {
     this.props.getUser();
   }
+  handleDelete = record => {
+    console.log(record);
+    this.props.deleteUser(record.UserId.S);
+  };
   render() {
-  const columns = [
+    const columns = [
       {
         title: "User Name",
         dataIndex: '["Username"].S',
@@ -43,18 +47,18 @@ class ModifyUserInfo extends React.Component {
         width: "20%"
       },
       {
-        title: "Edit",
+        title: "Edit/Delete",
         key: "edit",
         align: "center",
         render: (text, record) => (
           <span>
-            <a href="#">
+            <Button size="small">
               <Icon type="edit" />
-            </a>
+            </Button>
             <Divider type="vertical" />
-            <a href="#">
+            <Button size="small" onClick={() => this.handleDelete(record)}>
               <Icon type="delete" />
-            </a>
+            </Button>
           </span>
         )
       }
@@ -79,7 +83,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUser: () => dispatch(getUser())
+  getUser: () => dispatch(getUser()),
+  deleteUser: data => dispatch(deleteUser(data))
 });
 
 export default connect(

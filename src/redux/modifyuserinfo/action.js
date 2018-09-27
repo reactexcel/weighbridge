@@ -1,8 +1,8 @@
 import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
-import { getData } from "../../services/callDynamo";
+import { getData, deleteData } from "../../services/callDynamo";
 
-export default function* getUserRequest(action) {
+export function* getUserRequest(action) {
   const params = {
     ProjectionExpression: "UserId, Username, Address, Dob, UserType",
     TableName: "UserProfile"
@@ -14,5 +14,25 @@ export default function* getUserRequest(action) {
     }
   } catch (error) {
     yield put(actions.getUserError());
+  }
+}
+
+export function* deleteUserRequest(action) {
+  const params = {
+    Key: {
+      "UserId": {
+        S: action.payload
+      }
+    },
+    TableName: "UserProfile"
+  }
+  try {
+    const response = yield call(deleteData, params);
+    if (response) {
+      yield put(actions.getUser());
+      yield put(actions.deleteUserSuccess(response));
+    }
+  } catch (error) {
+    yield put(actions.deleteUserError());
   }
 }
