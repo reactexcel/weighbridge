@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Card } from "antd";
 import { Line, Bar } from "react-chartjs-2";
 import { defaults } from "react-chartjs-2";
+import { connect } from "react-redux";
 
 class InnerDashboard extends React.Component {
   render() {
@@ -107,5 +108,9 @@ class InnerDashboard extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  loggedIn: state.login.isSuccess,
+  signedIn: state.signup.isSuccess
+});
 
-export default InnerDashboard;
+export default connect(mapStateToProps)(InnerDashboard);

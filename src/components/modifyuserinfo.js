@@ -1,66 +1,74 @@
 import React from "react";
-import { Table, Icon } from "antd";
+import { Table, Icon, Divider, Button } from "antd";
+import { connect } from "react-redux";
+import { getUser, deleteUser } from "../redux/actions";
 
 class ModifyUserInfo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [
-        {
-          key: 1,
-          uid: "abc",
-          uname: "xyz",
-          type: "Payout User"
-        },
-        {
-          key: 2,
-          uid: "abc",
-          uname: "xyz",
-          type: "Data Entry User"
-        }
-      ]
-    };
-    this.columns = [
-      {
-        title: "User Id",
-        dataIndex: "uid",
-        key: "uid",
-        width: "30%"
-      },
+  }
+  componentWillMount() {
+    this.props.getUser();
+  }
+  handleDelete = record => {
+    this.props.deleteUser(record.UserId.S);
+  };
+  render() {
+    const columns = [
       {
         title: "User Name",
-        dataIndex: "uname",
-        key: "uname",
-        width: "30%"
+        dataIndex: '["Username"].S',
+        key: "Username",
+        width: "20%"
       },
       {
-        title: "type",
-        dataIndex: "type",
-        key: "type",
-        width: "30%"
+        title: "Email",
+        dataIndex: '["UserId"].S',
+        key: "Userid",
+        width: "20%"
       },
       {
-        title: "Edit",
+        title: "Type",
+        dataIndex: '["UserType"].S',
+        key: "UserType",
+        width: "15%"
+      },
+      {
+        title: "Date Of Birth",
+        dataIndex: '["Dob"].S',
+        key: "Dob",
+        width: "10%"
+      },
+      {
+        title: "Address",
+        dataIndex: '["Address"].S',
+        key: "Address",
+        width: "20%"
+      },
+      {
+        title: "Edit/Delete",
         key: "edit",
         align: "center",
         render: (text, record) => (
           <span>
-            <a href="#">
+            <Button size="small">
               <Icon type="edit" />
-            </a>
+            </Button>
+            <Divider type="vertical" />
+            <Button size="small" onClick={() => this.handleDelete(record)}>
+              <Icon type="delete" />
+            </Button>
           </span>
         )
       }
     ];
-  }
-  render() {
     return (
       <div>
         <div className="dashboard">Modify User Info</div>
         <div className="content">
           <Table
-            dataSource={this.state.data}
-            columns={this.columns}
+            dataSource={this.props.data}
+            columns={columns}
             pagination={false}
           />
         </div>
@@ -68,4 +76,17 @@ class ModifyUserInfo extends React.Component {
     );
   }
 }
-export default ModifyUserInfo;
+
+const mapStateToProps = state => ({
+  data: state.modifyuserinfo.data
+});
+
+const mapDispatchToProps = dispatch => ({
+  getUser: () => dispatch(getUser()),
+  deleteUser: data => dispatch(deleteUser(data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModifyUserInfo);

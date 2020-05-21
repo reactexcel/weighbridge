@@ -1,8 +1,9 @@
 import { put, call } from "redux-saga/effects";
 import * as actions from "../actions";
-import { putData } from "../../services/callDynamo";
+import { putData, deleteData } from "../../services/callDynamo";
 
-function* addSupplierRequest(action) {
+let i = 0;
+export function* addSupplierRequest(action) {
   let params = {
     Item: {
       "Supplier Id": {
@@ -45,17 +46,40 @@ function* addSupplierRequest(action) {
         S: action.payload.data.licenseexpirydate
       }
     },
-    TableName: "Supplier"
+    TableName: "SupplierTable"
+  };
+  const data = {
+    key: i++,
+    id: action.payload.id,
+    name: action.payload.data.name,
+    dob: action.payload.data.dob,
+    phoneno: action.payload.data.phoneno
   };
   try{
     const response = yield call(putData, params);
     if(response){
-      yield put(actions.addSupplierSuccess(response));
+      yield put(actions.addSupplierSuccess(data));
     }
   } catch(error){
     yield put(actions.addSupplierError());
   }
   
 }
-
-export default addSupplierRequest;
+export function* deleteSupplierRequest(action){
+  const params = {
+    Key: {
+      "Supplier Id": {
+        S: action.payload
+      }
+    },
+    TableName: "SupplierTable"
+  };
+  try {
+    const response = yield call(deleteData, params);
+    if (response) {
+      yield put(actions.deleteSupplierSuccess(action.payload));
+    }
+  } catch (error) {
+    yield put(actions.deleteSupplierError(error));
+  }
+}

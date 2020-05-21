@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import Dashboard from "../components/dashboard";
 import InnerDashboard from "../components/innerDashboard";
 import Searchnedit from "../components/searchnedit";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../components/login";
 import Signup from "../components/signup";
 import ForgetPassword from "../components/forgetPassword";
 import WeightEntry from "../components/weightEntry";
 import AddUser from "../components/adduser";
-import DeleteUser from "../components/deleteuser";
 import ModifyUserInfo from "../components/modifyuserinfo";
 import AddDriverOrAssistant from "../components/addDriverOrAssistant";
 import AddLorry from "../components/addLorry";
 import AddSupplier from "../components/addSupplier";
 import Payment from "../components/payments";
+import { connect } from "react-redux";
 
 class App extends Component {
   render() {
@@ -30,34 +30,48 @@ class App extends Component {
                   path="/dashboard/searchnedit"
                   component={Searchnedit}
                 />
-                <Route
-                  exact
-                  path="/dashboard/weightentry"
-                  component={WeightEntry}
-                />
-                <Route exact path="/dashboard/adduser" component={AddUser} />
-                <Route
-                  exact
-                  path="/dashboard/deleteuser"
-                  component={DeleteUser}
-                />
-                <Route
-                  exact
-                  path="/dashboard/modifyuserinfo"
-                  component={ModifyUserInfo}
-                />
-                <Route
-                  exact
-                  path="/dashboard/adddriverorassistant"
-                  component={AddDriverOrAssistant}
-                />
-                <Route exact path="/dashboard/addlorry" component={AddLorry} />
-                <Route
-                  exact
-                  path="/dashboard/addsupplier"
-                  component={AddSupplier}
-                />
-                <Route exact path="/dashboard/payments" component={Payment} />
+                {(this.props.type === "admin" ||
+                  this.props.type === "dataentry") && (
+                  <Route
+                    exact
+                    path="/dashboard/weightentry"
+                    component={WeightEntry}
+                  />
+                )}
+                {this.props.type === "admin" && (
+                  <Route exact path="/dashboard/adduser" component={AddUser} />
+                )}
+                {this.props.type === "admin" && (
+                  <Route
+                    exact
+                    path="/dashboard/modifyuserinfo"
+                    component={ModifyUserInfo}
+                  />
+                )}
+                {(this.props.type === "admin" ||
+                  this.props.type === "dataentry") && (
+                  <Switch>
+                    <Route
+                      exact
+                      path="/dashboard/adddriverorassistant"
+                      component={AddDriverOrAssistant}
+                    />
+                    <Route
+                      exact
+                      path="/dashboard/addlorry"
+                      component={AddLorry}
+                    />
+                    <Route
+                      exact
+                      path="/dashboard/addsupplier"
+                      component={AddSupplier}
+                    />
+                  </Switch>
+                )}
+                {(this.props.type === "admin" ||
+                  this.props.type === "payout") && (
+                  <Route exact path="/dashboard/payments" component={Payment} />
+                )}
               </Dashboard>
             )}
           />
@@ -70,4 +84,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  type: state.login.data.type
+});
+
+export default connect(mapStateToProps)(App);
